@@ -2,6 +2,14 @@
 import '../css/App.scss'
 import io from 'socket.io-client'
 
+//import Elm from './Main.elm'
+
+//const mountNode = document.getElementById('main')
+
+//const app = Elm.embed(Elm.Main, mountNode)
+
+console.log('are we getting here yet?')
+
 let socket
 
 function init(s) {

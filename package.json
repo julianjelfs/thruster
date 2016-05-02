@@ -16,7 +16,8 @@
   "scripts": {
     "test": "",
     "start": "./node_modules/.bin/babel-node server/index",
-    "build": "rimraf dist && set NODE_ENV=production && webpack --config ./webpack.production.config.js --progress --profile --colors",
+    "build": "rimraf dist && webpack --config ./webpack.config.js --progress --profile --colors",
+    "watch": "webpack --watch",
     "eslint": "eslint .",
     "jscs": "jscs .",
     "server": "NODE_ENV=dev node server/"
@@ -28,6 +29,8 @@
     "socket.io-client": "^1.4.5"
   },
   "devDependencies": {
+    "url-loader": "^0.5.7",
+    "elm-webpack-loader": "^2.0.1",
     "autoprefixer": "^6.0.3",
     "babel-core": "^6.3.26",
     "babel-eslint": "^4.1.6",
