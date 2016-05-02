@@ -2,11 +2,11 @@
 import '../css/App.scss'
 import io from 'socket.io-client'
 
-//import Elm from './Main.elm'
+import Elm from '../../src/Main.elm'
 
-//const mountNode = document.getElementById('main')
+const mountNode = document.getElementById('main')
 
-//const app = Elm.embed(Elm.Main, mountNode)
+const app = Elm.embed(Elm.Main, mountNode)
 
 console.log('are we getting here yet?')
 

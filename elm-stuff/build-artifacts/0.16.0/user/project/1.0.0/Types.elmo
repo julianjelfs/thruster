@@ -1,0 +1,21 @@
+Elm.Types = Elm.Types || {};
+Elm.Types.make = function (_elm) {
+   "use strict";
+   _elm.Types = _elm.Types || {};
+   if (_elm.Types.values) return _elm.Types.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var initialModel = {};
+   var Model = {};
+   var NoOp = {ctor: "NoOp"};
+   return _elm.Types.values = {_op: _op
+                              ,NoOp: NoOp
+                              ,Model: Model
+                              ,initialModel: initialModel};
+};

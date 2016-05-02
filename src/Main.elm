@@ -6,6 +6,7 @@ import State exposing (update)
 import Effects exposing (Effects, Never)
 import Task
 import StartApp
+import Html exposing (..)
 
 -- START APP
 init : ( Model, Effects Action )

@@ -47,6 +47,7 @@ module.exports = {
         }, {
             test: /\.(jpe?g|png|mp3)$/,
             loader: 'file?name=[path][name].[ext]'
-        }]
+        }],
+        noParse: [/.elm$/]
     }
 };
