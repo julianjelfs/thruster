@@ -15,11 +15,19 @@ Elm.Join.Types.make = function (_elm) {
    var _op = {};
    var Model = F2(function (a,b) {    return {name: a,team: b};});
    var initialModel = A2(Model,"","");
+   var UpdateTeam = function (a) {
+      return {ctor: "UpdateTeam",_0: a};
+   };
+   var UpdateName = function (a) {
+      return {ctor: "UpdateName",_0: a};
+   };
    var JoinGame = F2(function (a,b) {
       return {ctor: "JoinGame",_0: a,_1: b};
    });
    return _elm.Join.Types.values = {_op: _op
                                    ,JoinGame: JoinGame
+                                   ,UpdateName: UpdateName
+                                   ,UpdateTeam: UpdateTeam
                                    ,Model: Model
                                    ,initialModel: initialModel};
 };

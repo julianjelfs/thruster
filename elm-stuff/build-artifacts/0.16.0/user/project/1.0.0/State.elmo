@@ -7,6 +7,7 @@ Elm.State.make = function (_elm) {
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
    $Effects = Elm.Effects.make(_elm),
+   $Join$State = Elm.Join.State.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
@@ -14,7 +15,13 @@ Elm.State.make = function (_elm) {
    $Types = Elm.Types.make(_elm);
    var _op = {};
    var update = F2(function (action,model) {
-      return {ctor: "_Tuple2",_0: model,_1: $Effects.none};
+      var _p0 = action;
+      var _p1 = A2($Join$State.update,_p0._0,model.join);
+      var updated = _p1._0;
+      var fx = _p1._1;
+      return {ctor: "_Tuple2"
+             ,_0: _U.update(model,{join: updated})
+             ,_1: $Effects.none};
    });
    return _elm.State.values = {_op: _op,update: update};
 };
