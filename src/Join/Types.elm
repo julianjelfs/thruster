@@ -1,7 +1,9 @@
 module Join.Types (..) where
 
-type Action
-  = JoinGame String String
+type Action =
+    JoinGame String String
+    | UpdateName String
+    | UpdateTeam String
 
 type alias Model =
   { name: String

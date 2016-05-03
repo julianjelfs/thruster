@@ -5,6 +5,7 @@ import View exposing (view)
 import State exposing (update)
 import Effects exposing (Effects, Never)
 import Task
+import Mailboxes exposing (..)
 import StartApp
 import Html exposing (..)
 
@@ -29,3 +30,7 @@ main =
 port runner : Signal (Task.Task Never ())
 port runner =
   app.tasks
+
+port outboundSocket : Signal String
+port outboundSocket =
+    outboundSocketMailbox.signal
