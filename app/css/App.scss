@@ -14,6 +14,31 @@ body {
   box-sizing: border-box;
 }
 
+.join-form {
+    &.hide {
+        display: none;
+    }
+    padding: 40px;
+    border: 1px solid #ccc;
+    width: 400px;
+    margin:auto;
+    margin-top:100px;
+    -webkit-box-shadow: 5px 5px 10px 1px rgba(204,204,204,1);
+    -moz-box-shadow: 5px 5px 10px 1px rgba(204,204,204,1);
+    box-shadow: 5px 5px 10px 1px rgba(204,204,204,1);
+
+    button {
+        padding:10px;
+        margin-top:10px;
+    }
+
+    input {
+        margin:10px 0 10px 0;
+        padding:10px;
+        width:100%;
+    }
+}
+
 #info {
   color:#000;
   position: absolute;
@@ -24,39 +49,6 @@ body {
 
 a {
   color: red;
-}
-
-#start-wrapper {
-
-  &.hide {
-    display: none;
-  }
-  padding:40px;
-  background: #ffffff;
-  border-radius: 5px;
-  border:1px solid #cccccc;
-  width:400px;
-  margin:auto;
-  margin:50px auto 0 auto;
-  -webkit-box-shadow: 5px 5px 10px 1px rgba(204,204,204,1);
-  -moz-box-shadow: 5px 5px 10px 1px rgba(204,204,204,1);
-  box-shadow: 5px 5px 10px 1px rgba(204,204,204,1);
-
-  button {
-    padding:20px;
-    border-radius: 5px;
-    margin-top:10px;
-  }
-
-  input {
-    margin:10px 0 10px 0;
-    padding:10px;
-    width:100%;
-
-    &[type=color] {
-      height : 40px;
-    }
-  }
 }
 
 #stats {

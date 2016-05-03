@@ -1,0 +1,25 @@
+Elm.Join = Elm.Join || {};
+Elm.Join.Types = Elm.Join.Types || {};
+Elm.Join.Types.make = function (_elm) {
+   "use strict";
+   _elm.Join = _elm.Join || {};
+   _elm.Join.Types = _elm.Join.Types || {};
+   if (_elm.Join.Types.values) return _elm.Join.Types.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var Model = F2(function (a,b) {    return {name: a,team: b};});
+   var initialModel = A2(Model,"","");
+   var JoinGame = F2(function (a,b) {
+      return {ctor: "JoinGame",_0: a,_1: b};
+   });
+   return _elm.Join.Types.values = {_op: _op
+                                   ,JoinGame: JoinGame
+                                   ,Model: Model
+                                   ,initialModel: initialModel};
+};

@@ -1,0 +1,48 @@
+Elm.Join = Elm.Join || {};
+Elm.Join.View = Elm.Join.View || {};
+Elm.Join.View.make = function (_elm) {
+   "use strict";
+   _elm.Join = _elm.Join || {};
+   _elm.Join.View = _elm.Join.View || {};
+   if (_elm.Join.View.values) return _elm.Join.View.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Join$Types = Elm.Join.Types.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var view = F2(function (address,model) {
+      return A2($Html.form,
+      _U.list([$Html$Attributes.$class("join-form")]),
+      _U.list([A2($Html.div,
+              _U.list([]),
+              _U.list([A2($Html.label,
+                      _U.list([$Html$Attributes.$for("name-field")]),
+                      _U.list([$Html.text("Name")]))
+                      ,A2($Html.input,
+                      _U.list([$Html$Attributes.id("name-field")
+                              ,$Html$Attributes.autofocus(true)
+                              ,$Html$Attributes.placeholder("Enter your name")
+                              ,$Html$Attributes.value(model.name)]),
+                      _U.list([]))]))
+              ,A2($Html.div,
+              _U.list([]),
+              _U.list([A2($Html.label,
+                      _U.list([$Html$Attributes.$for("team-field")]),
+                      _U.list([$Html.text("Team")]))
+                      ,A2($Html.input,
+                      _U.list([$Html$Attributes.id("team-field")
+                              ,$Html$Attributes.placeholder("Choose your team")
+                              ,$Html$Attributes.value(model.team)]),
+                      _U.list([]))]))
+              ,A2($Html.button,
+              _U.list([]),
+              _U.list([$Html.text("join the game")]))]));
+   });
+   return _elm.Join.View.values = {_op: _op,view: view};
+};

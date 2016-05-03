@@ -7,6 +7,7 @@ Elm.View.make = function (_elm) {
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
    $Html = Elm.Html.make(_elm),
+   $Join$View = Elm.Join.View.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
@@ -16,7 +17,9 @@ Elm.View.make = function (_elm) {
    var view = F2(function (address,model) {
       return A2($Html.div,
       _U.list([]),
-      _U.list([$Html.text("Awesome - it works")]));
+      _U.list([A2($Join$View.view,
+      A2($Signal.forwardTo,address,$Types.JoinAction),
+      model.join)]));
    });
    return _elm.View.values = {_op: _op,view: view};
 };
