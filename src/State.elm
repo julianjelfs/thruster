@@ -12,4 +12,4 @@ update action model =
                 (updated, fx) =
                     Join.State.update sub model.join
             in
-                ( { model | join = updated }, Effects.none )
+                ( { model | join = updated }, Effects.map JoinAction fx )

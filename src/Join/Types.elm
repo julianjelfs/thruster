@@ -1,15 +1,17 @@
 module Join.Types (..) where
 
 type Action =
-    JoinGame String String
+    TaskDone ()
+    | JoinGame String String
     | UpdateName String
     | UpdateTeam String
 
 type alias Model =
   { name: String
   , team: String
+  , outboundSocketAddress: Signal.Address String
   }
 
-initialModel : Model
-initialModel =
-  Model "" ""
+initialModel : Signal.Address String -> Model
+initialModel address =
+  Model "" "" address

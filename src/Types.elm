@@ -8,6 +8,6 @@ type Action
 type alias Model =
     { join: Join.Types.Model }
 
-initialModel : Model
-initialModel =
-    { join = Join.Types.initialModel }
+initialModel : Signal.Address String -> Model
+initialModel address =
+    { join = (Join.Types.initialModel address)  }

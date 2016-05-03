@@ -4,12 +4,18 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Join.Types exposing (..)
+import Json.Decode exposing (succeed)
 
 view : Signal.Address Action -> Model -> Html
 view address model =
     Html.form
         [ class "join-form"
-        , onSubmit address (JoinGame model.name model.team)]
+        , onWithOptions
+            "submit"
+            { preventDefault = True
+            , stopPropagation = False }
+            ( succeed Nothing )
+            (\_ -> Signal.message address (JoinGame model.name model.team)) ]
         [ div 
             [] 
             [ label [for "name-field"] [ text "Name" ] 
@@ -28,6 +34,6 @@ view address model =
                 , placeholder "Choose your team"
                 , value model.team ] [] ]
         , button
-            []
+            [ type' "submit" ]
             [ text "join the game" ]
         ]

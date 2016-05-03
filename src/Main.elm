@@ -12,7 +12,7 @@ import Html exposing (..)
 -- START APP
 init : ( Model, Effects Action )
 init =
-  ( initialModel, Effects.none )
+  ( initialModel outboundSocketMailbox.address, Effects.none )
 
 app : StartApp.App Model
 app =
