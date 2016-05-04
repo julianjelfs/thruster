@@ -8,8 +8,11 @@ const mountNode = document.getElementById('main')
 
 const app = Elm.embed(Elm.Main, mountNode)
 
-app.ports.outboundSocket.subscribe(args => {
-    console.log(`A message from Elm: ${JSON.stringify(args)}`)
+app.ports.outboundSocket.subscribe(msg => {
+    switch (msg.messageType) {
+        case 1: startGame(msg.payload)
+            break;
+    }
 })
 
 let socket
@@ -34,6 +37,7 @@ function setupSocket(sock) {
 
     // Handle connection.
     sock.on('welcome', (s) => {
+        console.log(`We successfully joined the game and got response ${JSON.stringify(s)}`)
     })
 
     sock.on('update', s => {
@@ -41,6 +45,6 @@ function setupSocket(sock) {
     return sock
 }
 
-function startGame(name, team) {
+function startGame({name, team}) {
     socket = setupSocket(io({query: `name=${name}&team=${team}`}))
 }

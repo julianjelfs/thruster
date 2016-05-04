@@ -15,7 +15,7 @@ update action model =
             ( { model | team = team }, Effects.none )
         JoinGame name team ->
             let
-                fx = Signal.send model.outboundSocketAddress emptyMessage
+                fx = Signal.send model.outboundSocketAddress (joinMessage name team)
                     |> Effects.task
                     |> Effects.map TaskDone
             in

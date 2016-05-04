@@ -47,7 +47,7 @@ Game.start(() => {
 
 io.on('connection', (socket) => {
     const {name, team} = socket.handshake.query
-    console.log(`User ${name} joined the game on teamr ${team}`)
+    console.log(`User ${name} joined the game on team ${team}`)
 
     socket.on('position', pos => Game.updatePosition(socket.id, pos))
 
