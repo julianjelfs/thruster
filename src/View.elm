@@ -3,11 +3,27 @@ module View (..) where
 import Types exposing (..)
 import Html exposing (..)
 import Join.View
+import Color exposing (..)
+import Graphics.Collage exposing (..)
+import Graphics.Element exposing (..)
+
+shapes =
+    collage 300 300
+        [ ngon 4 75
+            |> filled green
+            |> move (-10,0)
+        , ngon 5 50
+            |> filled green
+            |> move (50,10)
+        ]
 
 view : Signal.Address Action -> Model -> Html
 view address model =
     if model.joined then
-        h1 [] [ text "Woohoo, welcome to the game!" ]
+        div
+            []
+            [ h1 [] [ Html.text "Woohoo, welcome to the game!" ]
+            , fromElement shapes ]
     else
         div
             []
