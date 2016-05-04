@@ -1,8 +1,10 @@
 module Mailboxes (..) where
 
-outboundSocketMailbox: Signal.Mailbox String
+import Messages exposing (..)
+
+outboundSocketMailbox: Signal.Mailbox Message
 outboundSocketMailbox =
-    Signal.mailbox ""
+    Signal.mailbox emptyMessage
 
 inboundSocketMailbox: Signal.Mailbox String
 inboundSocketMailbox =

@@ -2,6 +2,7 @@ module Join.State (..) where
 
 import Join.Types exposing (..)
 import Effects exposing (Effects, Never)
+import Messages exposing (..)
 
 update : Action -> Model -> ( Model, Effects Action )
 update action model =
@@ -14,7 +15,7 @@ update action model =
             ( { model | team = team }, Effects.none )
         JoinGame name team ->
             let
-                fx = Signal.send model.outboundSocketAddress (name ++ " joins the game on the " ++ team ++ " team")
+                fx = Signal.send model.outboundSocketAddress emptyMessage
                     |> Effects.task
                     |> Effects.map TaskDone
             in

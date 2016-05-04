@@ -8,6 +8,7 @@ import Task
 import Mailboxes exposing (..)
 import StartApp
 import Html exposing (..)
+import Messages exposing (..)
 
 -- START APP
 init : ( Model, Effects Action )
@@ -31,6 +32,6 @@ port runner : Signal (Task.Task Never ())
 port runner =
   app.tasks
 
-port outboundSocket : Signal String
+port outboundSocket : Signal Message
 port outboundSocket =
     outboundSocketMailbox.signal

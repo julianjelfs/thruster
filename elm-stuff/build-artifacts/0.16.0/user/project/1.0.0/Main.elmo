@@ -11,6 +11,7 @@ Elm.Main.make = function (_elm) {
    $List = Elm.List.make(_elm),
    $Mailboxes = Elm.Mailboxes.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
+   $Messages = Elm.Messages.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
    $StartApp = Elm.StartApp.make(_elm),
@@ -21,11 +22,11 @@ Elm.Main.make = function (_elm) {
    var _op = {};
    var outboundSocket = Elm.Native.Port.make(_elm).outboundSignal("outboundSocket",
    function (v) {
-      return v;
+      return {messageType: v.messageType,payload: v.payload};
    },
    $Mailboxes.outboundSocketMailbox.signal);
    var init = {ctor: "_Tuple2"
-              ,_0: $Types.initialModel
+              ,_0: $Types.initialModel($Mailboxes.outboundSocketMailbox.address)
               ,_1: $Effects.none};
    var app = $StartApp.start({init: init
                              ,inputs: _U.list([])

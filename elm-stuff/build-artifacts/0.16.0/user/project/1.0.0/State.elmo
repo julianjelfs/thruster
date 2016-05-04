@@ -21,7 +21,7 @@ Elm.State.make = function (_elm) {
       var fx = _p1._1;
       return {ctor: "_Tuple2"
              ,_0: _U.update(model,{join: updated})
-             ,_1: $Effects.none};
+             ,_1: A2($Effects.map,$Types.JoinAction,fx)};
    });
    return _elm.State.values = {_op: _op,update: update};
 };

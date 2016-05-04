@@ -9,10 +9,13 @@ Elm.Types.make = function (_elm) {
    $Join$Types = Elm.Join.Types.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
+   $Messages = Elm.Messages.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var initialModel = {join: $Join$Types.initialModel};
+   var initialModel = function (address) {
+      return {join: $Join$Types.initialModel(address)};
+   };
    var Model = function (a) {    return {join: a};};
    var JoinAction = function (a) {
       return {ctor: "JoinAction",_0: a};

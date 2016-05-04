@@ -9,7 +9,7 @@ const mountNode = document.getElementById('main')
 const app = Elm.embed(Elm.Main, mountNode)
 
 app.ports.outboundSocket.subscribe(args => {
-    console.log(`A message from Elm: ${args}`)
+    console.log(`A message from Elm: ${JSON.stringify(args)}`)
 })
 
 let socket
