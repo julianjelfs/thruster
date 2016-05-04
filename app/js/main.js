@@ -6,7 +6,12 @@ import Elm from '../../src/Main.elm'
 
 const mountNode = document.getElementById('main')
 
-const app = Elm.embed(Elm.Main, mountNode)
+const app = Elm.embed(Elm.Main, mountNode, {
+    inboundSocket: {
+        messageType: 0,
+        payload: null
+    }
+})
 
 app.ports.outboundSocket.subscribe(msg => {
     switch (msg.messageType) {
@@ -37,7 +42,10 @@ function setupSocket(sock) {
 
     // Handle connection.
     sock.on('welcome', (s) => {
-        console.log(`We successfully joined the game and got response ${JSON.stringify(s)}`)
+        app.ports.inboundSocket.send({
+            messageType: 2,
+            payload: s
+        })        
     })
 
     sock.on('update', s => {

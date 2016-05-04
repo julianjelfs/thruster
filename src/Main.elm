@@ -19,7 +19,7 @@ app : StartApp.App Model
 app =
   StartApp.start
     { init = init
-    , inputs = []
+    , inputs = [inboundSocketSignal]
     , update = update
     , view = view
     }
@@ -35,3 +35,9 @@ port runner =
 port outboundSocket : Signal Message
 port outboundSocket =
     outboundSocketMailbox.signal
+
+port inboundSocket : Signal Message
+
+inboundSocketSignal: Signal Action
+inboundSocketSignal =
+    Signal.map InboundMessage inboundSocket

@@ -34,22 +34,19 @@ import IO from 'socket.io'
 const http = (Http).Server(app)
 const io = (IO)(http)
 
-/*
 Game.start(() => {
-    const d = Game.delta(),
-        {changed, deleted} = d
+    const d = Game.delta()
 
-    if (d && (changed.length > 0 || deleted .length > 0)) {
+    if (d) {
         io.emit('update', d)
     }
 })
-*/
 
 io.on('connection', (socket) => {
     const {name, team} = socket.handshake.query
     console.log(`User ${name} joined the game on team ${team}`)
 
-    socket.on('position', pos => Game.updatePosition(socket.id, pos))
+    socket.on('updatePlayer', player => Game.updatePlayer(socket.id, player))
 
     socket.on('disconnect', _ => Game.removePlayer(socket.id))
 

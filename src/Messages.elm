@@ -2,21 +2,31 @@ module Messages (..) where
 
 import Json.Encode as Encode
 
+type alias MessageTypes =
+    { empty: Int
+    , join: Int
+    , welcome: Int
+    , update: Int
+    , delta: Int
+    }
+
+messageTypes: MessageTypes
+messageTypes =
+    MessageTypes 0 1 2 3 4
+
 type alias Message =
     { messageType: Int
     , payload: Encode.Value
     }
 
-joinEncoder: String -> String -> Encode.Value
-joinEncoder name team =
-    Encode.object
-        [ ("name", Encode.string name)
-        , ("team", Encode.string team) ]
-
 emptyMessage: Message
 emptyMessage =
-    Message 0 Encode.null
+    Message messageTypes.empty Encode.null
 
 joinMessage: String -> String -> Message
 joinMessage name team =
-    Message 1 (joinEncoder name team)
+    Message
+        messageTypes.join
+        (Encode.object
+                [ ("name", Encode.string name)
+                , ("team", Encode.string team) ])

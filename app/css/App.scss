@@ -1,11 +1,11 @@
 body {
-  color: #000;
+  color: #fff;
   font-family:Monospace;
   font-size:13px;
   text-align:center;
   font-weight: bold;
 
-  background-color: #fff;
+  background-color: #000;
   margin: 0px;
   overflow: hidden;
 }
@@ -23,9 +23,6 @@ body {
     width: 400px;
     margin:auto;
     margin-top:100px;
-    -webkit-box-shadow: 5px 5px 10px 1px rgba(204,204,204,1);
-    -moz-box-shadow: 5px 5px 10px 1px rgba(204,204,204,1);
-    box-shadow: 5px 5px 10px 1px rgba(204,204,204,1);
 
     button {
         padding:10px;
@@ -36,6 +33,10 @@ body {
         margin:10px 0 10px 0;
         padding:10px;
         width:100%;
+    }
+
+    label {
+      font-size: 1.4em;
     }
 }
 
