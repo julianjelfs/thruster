@@ -2,6 +2,7 @@ module Types (..) where
 
 import Join.Types
 import Messages exposing (..)
+import Agents exposing (..)
 import Time
 
 type Action =
@@ -14,6 +15,9 @@ type alias Model =
     , joined: Bool
     , joinedAt: Maybe Time.Time
     , screen: (Int, Int)
+    , me: Maybe Player
+    , players: List Player
+    , asteroids: List Asteroid
     }
 
 initialModel : (Int, Int) -> Signal.Address Message -> Model
@@ -22,4 +26,7 @@ initialModel screenSize address =
     , joined = False
     , joinedAt = Nothing
     , screen = screenSize
+    , me = Nothing
+    , players = []
+    , asteroids = []
     }

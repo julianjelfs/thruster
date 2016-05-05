@@ -1,6 +1,8 @@
 module Messages (..) where
 
 import Json.Encode as Encode
+import Json.Decode as Decode exposing ((:=))
+import Agents exposing (..)
 
 type alias MessageTypes =
     { empty: Int
@@ -8,6 +10,12 @@ type alias MessageTypes =
     , welcome: Int
     , update: Int
     , delta: Int
+    }
+
+type alias WelcomeMessage =
+    { me: Player
+    , players: List Player
+    , asteroids: List Asteroid
     }
 
 messageTypes: MessageTypes
@@ -18,6 +26,45 @@ type alias Message =
     { messageType: Int
     , payload: Encode.Value
     }
+
+playerDecoder =
+    Decode.object7
+        Player
+        ("x" := Decode.float)
+        ("y" := Decode.float)
+        ("angle" := Decode.float)
+        ("thrusting" := Decode.bool)
+        ("id" := Decode.string)
+        ("name" := Decode.string)
+        ("team" := Decode.string)
+
+asteroidDecoder =
+    Decode.object5
+        Asteroid
+        ("x" := Decode.float)
+        ("y" := Decode.float)
+        ("c" := Decode.string)
+        ("id" := Decode.int)
+        ("r" := Decode.float)
+
+welcomeMessage: Message -> Maybe WelcomeMessage
+welcomeMessage msg =
+    if msg.messageType == messageTypes.welcome then
+        let
+            result =
+                Decode.decodeValue
+                    (Decode.object3
+                        WelcomeMessage
+                        ("me" := playerDecoder)
+                        ("players" := Decode.list playerDecoder)
+                        ("asteroids" := Decode.list asteroidDecoder))
+                    msg.payload
+        in
+            case result of
+                Ok wm -> Just wm
+                Err _ -> Nothing
+    else
+        Nothing
 
 emptyMessage: Message
 emptyMessage =
