@@ -4,6 +4,7 @@ import Types exposing (..)
 import Join.State
 import Effects exposing (Effects, Never)
 import Debug exposing (log)
+import Messages exposing (messageTypes)
 
 update : Action -> Model -> ( Model, Effects Action )
 update action model =
@@ -11,7 +12,13 @@ update action model =
         ScreenSizeChanged dim ->
             ( { model | screen = (log "screen size: " dim) }, Effects.none)
         InboundMessage (time, msg) ->
-            ( { model | joined = True, joinedAt = Just time }, Effects.none)
+            if msg.messageType == messageTypes.welcome then
+                ( { model | joined = True, joinedAt = Just time }, Effects.none)
+            else if msg.messageType == messageTypes.delta then
+                ( model, Effects.none)
+            else
+                ( model, Effects.none)
+
         JoinAction sub ->
             let
                 (updated, fx) =

@@ -11,15 +11,17 @@ Elm.Types.make = function (_elm) {
    $Maybe = Elm.Maybe.make(_elm),
    $Messages = Elm.Messages.make(_elm),
    $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
+   $Signal = Elm.Signal.make(_elm),
+   $Time = Elm.Time.make(_elm);
    var _op = {};
    var initialModel = F2(function (screenSize,address) {
       return {join: $Join$Types.initialModel(address)
              ,joined: false
+             ,joinedAt: $Maybe.Nothing
              ,screen: screenSize};
    });
-   var Model = F3(function (a,b,c) {
-      return {join: a,joined: b,screen: c};
+   var Model = F4(function (a,b,c,d) {
+      return {join: a,joined: b,joinedAt: c,screen: d};
    });
    var ScreenSizeChanged = function (a) {
       return {ctor: "ScreenSizeChanged",_0: a};

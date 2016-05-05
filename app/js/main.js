@@ -4,6 +4,14 @@ import io from 'socket.io-client'
 
 import Elm from '../../src/Main.elm'
 
+const messageTypes = {
+    empty: 0,
+    join: 1,
+    welcome: 2,
+    update: 3,
+    delta: 4
+}
+
 const app = Elm.fullscreen(Elm.Main, {
     inboundSocket: {
         messageType: 0,
@@ -17,7 +25,7 @@ const app = Elm.fullscreen(Elm.Main, {
 
 app.ports.outboundSocket.subscribe(msg => {
     switch (msg.messageType) {
-        case 1: startGame(msg.payload)
+        case messageTypes.join: startGame(msg.payload)
             break;
     }
 })
@@ -45,12 +53,16 @@ function setupSocket(sock) {
     // Handle connection.
     sock.on('welcome', (s) => {
         app.ports.inboundSocket.send({
-            messageType: 2,
+            messageType: messageTypes.welcome,
             payload: s
         })        
     })
 
     sock.on('update', s => {
+        app.ports.inboundSocket.send({
+            messageType: messageTypes.delta,
+            payload: s
+        })
     })
     return sock
 }

@@ -10,7 +10,6 @@ import StartApp
 import Window
 import Html exposing (..)
 import Messages exposing (..)
-import Signal.Extra exposing (foldp')
 import Debug exposing (log)
 import Time exposing (timestamp)
 

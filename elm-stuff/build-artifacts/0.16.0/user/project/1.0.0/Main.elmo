@@ -17,6 +17,7 @@ Elm.Main.make = function (_elm) {
    $StartApp = Elm.StartApp.make(_elm),
    $State = Elm.State.make(_elm),
    $Task = Elm.Task.make(_elm),
+   $Time = Elm.Time.make(_elm),
    $Types = Elm.Types.make(_elm),
    $View = Elm.View.make(_elm),
    $Window = Elm.Window.make(_elm);
@@ -44,7 +45,7 @@ Elm.Main.make = function (_elm) {
    });
    var inboundSocketSignal = A2($Signal.map,
    $Types.InboundMessage,
-   inboundSocket);
+   $Time.timestamp(inboundSocket));
    var outboundSocket = Elm.Native.Port.make(_elm).outboundSignal("outboundSocket",
    function (v) {
       return {messageType: v.messageType,payload: v.payload};
