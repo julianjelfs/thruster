@@ -12,6 +12,7 @@ import Html exposing (..)
 import Messages exposing (..)
 import Signal.Extra exposing (foldp')
 import Debug exposing (log)
+import Time exposing (timestamp)
 
 -- START APP
 init : ( Model, Effects Action )
@@ -46,7 +47,7 @@ port initialWindowSize : (Int, Int)
 
 inboundSocketSignal: Signal Action
 inboundSocketSignal =
-    Signal.map InboundMessage inboundSocket
+    Signal.map InboundMessage (timestamp inboundSocket)
 
 screenSizeSignal: Signal Action
 screenSizeSignal =

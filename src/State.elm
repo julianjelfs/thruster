@@ -10,8 +10,8 @@ update action model =
     case action of
         ScreenSizeChanged dim ->
             ( { model | screen = (log "screen size: " dim) }, Effects.none)
-        InboundMessage msg ->
-            ( { model | joined = True }, Effects.none)
+        InboundMessage (time, msg) ->
+            ( { model | joined = True, joinedAt = Just time }, Effects.none)
         JoinAction sub ->
             let
                 (updated, fx) =

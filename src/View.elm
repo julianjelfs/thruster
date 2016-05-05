@@ -6,16 +6,14 @@ import Join.View
 import Color exposing (..)
 import Graphics.Collage exposing (..)
 import Graphics.Element exposing (..)
+import Starfield.View exposing (starfield)
 
-shapes (w, h) =
-    collage w h
-        [ ngon 4 75
-            |> filled green
-            |> move (-10,0)
-        , ngon 5 50
-            |> filled green
-            |> move (50,10)
-        ]
+canvas {joinedAt} dim =
+    let
+        (w, h) = dim
+    in
+        collage w h (starfield joinedAt dim)
+            |> fromElement
 
 view : Signal.Address Action -> Model -> Html
 view address model =
@@ -23,7 +21,7 @@ view address model =
         div
             []
             [ h1 [] [ Html.text "Woohoo, welcome to the game!" ]
-            , fromElement (shapes model.screen) ]
+            , canvas model model.screen ]
     else
         div
             []
