@@ -6,12 +6,17 @@ import Messages exposing (..)
 type Action =
     JoinAction Join.Types.Action
     | InboundMessage Message
+    | ScreenSizeChanged (Int, Int)
 
 type alias Model =
     { join: Join.Types.Model
-    , joined: Bool }
+    , joined: Bool
+    , screen: (Int, Int)
+    }
 
-initialModel : Signal.Address Message -> Model
-initialModel address =
+initialModel : (Int, Int) -> Signal.Address Message -> Model
+initialModel screenSize address =
     { join = (Join.Types.initialModel address)
-    , joined = False }
+    , joined = False
+    , screen = screenSize
+    }

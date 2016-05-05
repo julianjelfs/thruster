@@ -3,10 +3,13 @@ module State (..) where
 import Types exposing (..)
 import Join.State
 import Effects exposing (Effects, Never)
+import Debug exposing (log)
 
 update : Action -> Model -> ( Model, Effects Action )
 update action model =
     case action of
+        ScreenSizeChanged dim ->
+            ( { model | screen = (log "screen size: " dim) }, Effects.none)
         InboundMessage msg ->
             ( { model | joined = True }, Effects.none)
         JoinAction sub ->

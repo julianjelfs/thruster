@@ -13,15 +13,27 @@ Elm.Types.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var initialModel = function (address) {
-      return {join: $Join$Types.initialModel(address)};
+   var initialModel = F2(function (screenSize,address) {
+      return {join: $Join$Types.initialModel(address)
+             ,joined: false
+             ,screen: screenSize};
+   });
+   var Model = F3(function (a,b,c) {
+      return {join: a,joined: b,screen: c};
+   });
+   var ScreenSizeChanged = function (a) {
+      return {ctor: "ScreenSizeChanged",_0: a};
    };
-   var Model = function (a) {    return {join: a};};
+   var InboundMessage = function (a) {
+      return {ctor: "InboundMessage",_0: a};
+   };
    var JoinAction = function (a) {
       return {ctor: "JoinAction",_0: a};
    };
    return _elm.Types.values = {_op: _op
                               ,JoinAction: JoinAction
+                              ,InboundMessage: InboundMessage
+                              ,ScreenSizeChanged: ScreenSizeChanged
                               ,Model: Model
                               ,initialModel: initialModel};
 };

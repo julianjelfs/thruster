@@ -7,8 +7,8 @@ import Color exposing (..)
 import Graphics.Collage exposing (..)
 import Graphics.Element exposing (..)
 
-shapes =
-    collage 300 300
+shapes (w, h) =
+    collage w h
         [ ngon 4 75
             |> filled green
             |> move (-10,0)
@@ -23,7 +23,7 @@ view address model =
         div
             []
             [ h1 [] [ Html.text "Woohoo, welcome to the game!" ]
-            , fromElement shapes ]
+            , fromElement (shapes model.screen) ]
     else
         div
             []

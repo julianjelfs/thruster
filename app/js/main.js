@@ -4,13 +4,15 @@ import io from 'socket.io-client'
 
 import Elm from '../../src/Main.elm'
 
-const mountNode = document.getElementById('main')
-
-const app = Elm.embed(Elm.Main, mountNode, {
+const app = Elm.fullscreen(Elm.Main, {
     inboundSocket: {
         messageType: 0,
         payload: null
-    }
+    },
+    initialWindowSize : [
+        document.documentElement.clientWidth,
+        document.documentElement.clientHeight
+    ]
 })
 
 app.ports.outboundSocket.subscribe(msg => {

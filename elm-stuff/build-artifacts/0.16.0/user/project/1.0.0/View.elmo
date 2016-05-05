@@ -5,7 +5,9 @@ Elm.View.make = function (_elm) {
    if (_elm.View.values) return _elm.View.values;
    var _U = Elm.Native.Utils.make(_elm),
    $Basics = Elm.Basics.make(_elm),
+   $Color = Elm.Color.make(_elm),
    $Debug = Elm.Debug.make(_elm),
+   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
    $Html = Elm.Html.make(_elm),
    $Join$View = Elm.Join.View.make(_elm),
    $List = Elm.List.make(_elm),
@@ -14,12 +16,33 @@ Elm.View.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $Types = Elm.Types.make(_elm);
    var _op = {};
+   var shapes = function (_p0) {
+      var _p1 = _p0;
+      return A3($Graphics$Collage.collage,
+      _p1._0,
+      _p1._1,
+      _U.list([A2($Graphics$Collage.move,
+              {ctor: "_Tuple2",_0: -10,_1: 0},
+              A2($Graphics$Collage.filled,
+              $Color.green,
+              A2($Graphics$Collage.ngon,4,75)))
+              ,A2($Graphics$Collage.move,
+              {ctor: "_Tuple2",_0: 50,_1: 10},
+              A2($Graphics$Collage.filled,
+              $Color.green,
+              A2($Graphics$Collage.ngon,5,50)))]));
+   };
    var view = F2(function (address,model) {
-      return A2($Html.div,
+      return model.joined ? A2($Html.div,
+      _U.list([]),
+      _U.list([A2($Html.h1,
+              _U.list([]),
+              _U.list([$Html.text("Woohoo, welcome to the game!")]))
+              ,$Html.fromElement(shapes(model.screen))])) : A2($Html.div,
       _U.list([]),
       _U.list([A2($Join$View.view,
       A2($Signal.forwardTo,address,$Types.JoinAction),
       model.join)]));
    });
-   return _elm.View.values = {_op: _op,view: view};
+   return _elm.View.values = {_op: _op,shapes: shapes,view: view};
 };
