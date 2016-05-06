@@ -1,6 +1,5 @@
 module Asteroid.View (..) where
 
-import Html exposing (..)
 import Color exposing (..)
 import Graphics.Collage exposing (..)
 import Graphics.Element exposing (..)
@@ -16,7 +15,10 @@ line =
     }
 
 asteroid a =
-    ngon 8 15 |> outlined line |> move (a.x, a.y)
+    ngon 6 a.radius
+        |> filled (rgba 255 14 93 0.5)
+        |> move (a.x, a.y)
+        |> rotate (degrees a.angle)
 
 root asteroids (w, h) =
     asteroids

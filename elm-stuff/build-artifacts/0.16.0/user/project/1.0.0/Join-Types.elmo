@@ -18,7 +18,7 @@ Elm.Join.Types.make = function (_elm) {
       return {name: a,team: b,outboundSocketAddress: c};
    });
    var initialModel = function (address) {
-      return A3(Model,"","",address);
+      return A3(Model,"","Blue",address);
    };
    var UpdateTeam = function (a) {
       return {ctor: "UpdateTeam",_0: a};

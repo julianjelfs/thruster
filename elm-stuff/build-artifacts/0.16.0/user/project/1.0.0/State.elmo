@@ -22,20 +22,40 @@ Elm.State.make = function (_elm) {
                                         ,_0: _U.update(model,
                                         {screen: A2($Debug.log,"screen size: ",_p0._0)})
                                         ,_1: $Effects.none};
-         case "InboundMessage": var _p1 = _p0._0._1;
-           return _U.eq(_p1.messageType,
-           $Messages.messageTypes.welcome) ? {ctor: "_Tuple2"
-                                             ,_0: _U.update(model,
-                                             {joined: true,joinedAt: $Maybe.Just(_p0._0._0)})
-                                             ,_1: $Effects.none} : _U.eq(_p1.messageType,
-           $Messages.messageTypes.delta) ? {ctor: "_Tuple2"
-                                           ,_0: model
-                                           ,_1: $Effects.none} : {ctor: "_Tuple2"
-                                                                 ,_0: model
-                                                                 ,_1: $Effects.none};
-         default: var _p2 = A2($Join$State.update,_p0._0,model.join);
-           var updated = _p2._0;
-           var fx = _p2._1;
+         case "InboundMessage": var _p5 = _p0._0._1;
+           if (_U.eq(_p5.messageType,$Messages.messageTypes.welcome)) {
+                 var maybeWm = $Messages.welcomeMessage(_p5);
+                 var _p1 = maybeWm;
+                 if (_p1.ctor === "Just") {
+                       var _p2 = _p1._0;
+                       return {ctor: "_Tuple2"
+                              ,_0: _U.update(model,
+                              {joined: true
+                              ,joinedAt: $Maybe.Just(_p0._0._0)
+                              ,me: $Maybe.Just(_p2.me)
+                              ,players: _p2.players
+                              ,asteroids: _p2.asteroids})
+                              ,_1: $Effects.none};
+                    } else {
+                       return {ctor: "_Tuple2",_0: model,_1: $Effects.none};
+                    }
+              } else if (_U.eq(_p5.messageType,$Messages.messageTypes.delta))
+              {
+                    var maybeDelta = $Messages.deltaMessage(_p5);
+                    var _p3 = maybeDelta;
+                    if (_p3.ctor === "Just") {
+                          var _p4 = _p3._0;
+                          return {ctor: "_Tuple2"
+                                 ,_0: _U.update(model,
+                                 {players: _p4.players,asteroids: _p4.asteroids})
+                                 ,_1: $Effects.none};
+                       } else {
+                          return {ctor: "_Tuple2",_0: model,_1: $Effects.none};
+                       }
+                 } else return {ctor: "_Tuple2",_0: model,_1: $Effects.none};
+         default: var _p6 = A2($Join$State.update,_p0._0,model.join);
+           var updated = _p6._0;
+           var fx = _p6._1;
            return {ctor: "_Tuple2"
                   ,_0: _U.update(model,{join: updated})
                   ,_1: A2($Effects.map,$Types.JoinAction,fx)};}

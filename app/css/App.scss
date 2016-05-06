@@ -14,6 +14,11 @@ body {
   box-sizing: border-box;
 }
 
+.welcome {
+  position: absolute;
+  width:100%;
+}
+
 .join-form {
     &.hide {
         display: none;
@@ -29,7 +34,7 @@ body {
         margin-top:10px;
     }
 
-    input {
+    input, select {
         margin:10px 0 10px 0;
         padding:10px;
         width:100%;

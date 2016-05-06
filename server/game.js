@@ -15,6 +15,18 @@ let asteroids = {},
     players = {},
     nextId = 0
 
+function randomNum(min,max) {
+    return Math.floor(Math.random()*(max-min+1)+min)
+}
+
+function randomAngle() {
+    return randomNum(0, 360)
+}
+
+function randomAsteroidSize() {
+    return randomNum(10, 25)
+}
+
 function randomPosition(){
     const [x, y] = config.dimensions
     return {
@@ -83,7 +95,8 @@ function createAnAsteroid() {
     return Object.assign({
         c: randomColour(),
         id: ++nextId,
-        r: 100  //replace with random position
+        r: randomAsteroidSize(),
+        a: randomAngle()
     }, randomPosition())
 }
 

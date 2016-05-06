@@ -16,4 +16,5 @@ type alias Asteroid =
     , colour: String
     , id: Int
     , radius: Float
+    , angle: Float
     }

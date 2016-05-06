@@ -27,13 +27,19 @@ view address model =
                 , value model.name ] [] ] 
         , div
             []
-            [ label [for "team-field"] [ text "Team" ] 
-            , input 
-                [ id "team-field"
-                , on "input" targetValue (\t -> Signal.message address (UpdateTeam t))
-                , placeholder "Choose your team"
-                , value model.team ] [] ]
+            [ label [for "team-field"] [ text "Team" ]
+            , select
+                [ class "form-control"
+                , id "team"
+                , on "change" targetValue (\v -> Signal.message address (v |> UpdateTeam))]
+                [ option
+                    [value "Blue"] [ text "Blue" ]
+                , option
+                    [value "Green"] [ text "Green" ]
+                ]
+            ]
         , button
             [ type' "submit" ]
             [ text "join the game" ]
         ]
+

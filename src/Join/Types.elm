@@ -16,4 +16,4 @@ type alias Model =
 
 initialModel : Signal.Address Message -> Model
 initialModel address =
-  Model "" "" address
+  Model "" "Blue" address
