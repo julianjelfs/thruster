@@ -2,6 +2,8 @@ module State (..) where
 
 import Types exposing (..)
 import Join.State
+import Player.State
+import Agents exposing (Player)
 import Effects exposing (Effects, Never)
 import Debug exposing (log)
 import Messages exposing (messageTypes, welcomeMessage, deltaMessage)
@@ -37,6 +39,13 @@ update action model =
                             ( model, Effects.none )
             else
                 ( model, Effects.none)
+
+        PlayerAction sub ->
+            let
+                (updated, fx) =
+                    Player.State.update sub model.me
+            in
+                ( { model | me = updated }, Effects.map PlayerAction fx )
 
         JoinAction sub ->
             let

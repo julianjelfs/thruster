@@ -52,17 +52,21 @@ Elm.Join.View.make = function (_elm) {
               _U.list([A2($Html.label,
                       _U.list([$Html$Attributes.$for("team-field")]),
                       _U.list([$Html.text("Team")]))
-                      ,A2($Html.input,
-                      _U.list([$Html$Attributes.id("team-field")
+                      ,A2($Html.select,
+                      _U.list([$Html$Attributes.$class("form-control")
+                              ,$Html$Attributes.id("team")
                               ,A3($Html$Events.on,
-                              "input",
+                              "change",
                               $Html$Events.targetValue,
-                              function (t) {
-                                 return A2($Signal.message,address,$Join$Types.UpdateTeam(t));
-                              })
-                              ,$Html$Attributes.placeholder("Choose your team")
-                              ,$Html$Attributes.value(model.team)]),
-                      _U.list([]))]))
+                              function (v) {
+                                 return A2($Signal.message,address,$Join$Types.UpdateTeam(v));
+                              })]),
+                      _U.list([A2($Html.option,
+                              _U.list([$Html$Attributes.value("Blue")]),
+                              _U.list([$Html.text("Blue")]))
+                              ,A2($Html.option,
+                              _U.list([$Html$Attributes.value("Green")]),
+                              _U.list([$Html.text("Green")]))]))]))
               ,A2($Html.button,
               _U.list([$Html$Attributes.type$("submit")]),
               _U.list([$Html.text("join the game")]))]));

@@ -29,7 +29,7 @@ root maybeTime (w, h) =
     case maybeTime of
         Just t ->
             createStars
-                100
+                50
                 []
                 (initialSeed (Time.inMilliseconds t |> round))
                 (minMax w)

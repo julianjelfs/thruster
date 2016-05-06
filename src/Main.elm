@@ -1,6 +1,7 @@
 module Main (..) where
 
 import Types exposing (..)
+import Player.Types
 import View exposing (view)
 import State exposing (update)
 import Effects exposing (Effects, Never)
@@ -12,6 +13,7 @@ import Html exposing (..)
 import Messages exposing (..)
 import Debug exposing (log)
 import Time exposing (timestamp)
+import Keyboard
 
 -- START APP
 init : ( Model, Effects Action )
@@ -22,10 +24,20 @@ app : StartApp.App Model
 app =
   StartApp.start
     { init = init
-    , inputs = [inboundSocketSignal, screenSizeSignal]
+    , inputs = [inboundSocketSignal, screenSizeSignal, rotateSignal]
     , update = update
     , view = view
     }
+
+rotateSignal: Signal Action
+rotateSignal =
+    let
+        toAction xy =
+            xy
+                |> Player.Types.Rotate
+                |> PlayerAction
+    in
+        Signal.map toAction Keyboard.arrows
 
 main : Signal.Signal Html
 main =

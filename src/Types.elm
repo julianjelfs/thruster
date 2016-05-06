@@ -1,12 +1,14 @@
 module Types (..) where
 
 import Join.Types
+import Player.Types
 import Messages exposing (..)
 import Agents exposing (..)
 import Time
 
 type Action =
     JoinAction Join.Types.Action
+    | PlayerAction Player.Types.Action
     | InboundMessage (Time.Time, Message)
     | ScreenSizeChanged (Int, Int)
 

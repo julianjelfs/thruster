@@ -11,6 +11,7 @@ Elm.Types.make = function (_elm) {
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Messages = Elm.Messages.make(_elm),
+   $Player$Types = Elm.Player.Types.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
    $Time = Elm.Time.make(_elm);
@@ -39,11 +40,15 @@ Elm.Types.make = function (_elm) {
    var InboundMessage = function (a) {
       return {ctor: "InboundMessage",_0: a};
    };
+   var PlayerAction = function (a) {
+      return {ctor: "PlayerAction",_0: a};
+   };
    var JoinAction = function (a) {
       return {ctor: "JoinAction",_0: a};
    };
    return _elm.Types.values = {_op: _op
                               ,JoinAction: JoinAction
+                              ,PlayerAction: PlayerAction
                               ,InboundMessage: InboundMessage
                               ,ScreenSizeChanged: ScreenSizeChanged
                               ,Model: Model
