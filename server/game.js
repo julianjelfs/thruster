@@ -18,8 +18,8 @@ let asteroids = {},
 function randomPosition(){
     const [x, y] = config.dimensions
     return {
-        x: ( Math.random() - 0.5 ) * x,
-        y: ( Math.random() - 0.5 ) * y
+        x: Math.round(( Math.random() - 0.5 ) * x),
+        y: Math.round(( Math.random() - 0.5 ) * y)
     }
 }
 
@@ -74,8 +74,8 @@ function delta() {
     //replenish asteroids
     asteroids = topUpAsteroids(asteroids)
     return {
-        asteroids,
-        players
+        players: Object.values(players),
+        asteroids: Object.values(asteroids)
     }
 }
 
@@ -107,8 +107,8 @@ module.exports = {
     addPlayer: player => {
         return {
             me: addPlayer(player),
-            players,
-            asteroids
+            players: Object.values(players),
+            asteroids: Object.values(asteroids)
         }
     }
 }

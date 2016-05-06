@@ -6,13 +6,17 @@ import Join.View
 import Color exposing (..)
 import Graphics.Collage exposing (..)
 import Graphics.Element exposing (..)
-import Starfield.View exposing (starfield)
+import Starfield.View as Starfield
+import Asteroid.View as Asteroid
+import List
 
-canvas {joinedAt} dim =
+canvas {joinedAt, asteroids} dim =
     let
         (w, h) = dim
+        stars = Starfield.root joinedAt dim
+        asts = Asteroid.root asteroids dim
     in
-        collage w h (starfield joinedAt dim)
+        collage w h (List.append stars asts)
             |> fromElement
 
 view : Signal.Address Action -> Model -> Html

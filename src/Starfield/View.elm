@@ -25,7 +25,7 @@ createStars num stars seed width height =
 minMax v =
     (negate ((toFloat v) / 2), ((toFloat v) / 2))
 
-starfield maybeTime (w, h) =
+root maybeTime (w, h) =
     case maybeTime of
         Just t ->
             createStars

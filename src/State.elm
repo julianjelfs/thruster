@@ -4,7 +4,7 @@ import Types exposing (..)
 import Join.State
 import Effects exposing (Effects, Never)
 import Debug exposing (log)
-import Messages exposing (messageTypes, welcomeMessage)
+import Messages exposing (messageTypes, welcomeMessage, deltaMessage)
 
 update : Action -> Model -> ( Model, Effects Action )
 update action model =
@@ -26,7 +26,15 @@ update action model =
                         Nothing ->
                             ( model, Effects.none )
             else if msg.messageType == messageTypes.delta then
-                ( model, Effects.none)
+                let
+                    maybeDelta = deltaMessage msg
+                in
+                    case maybeDelta of
+                        Just d ->
+                            ( { model | players = d.players
+                                , asteroids = d.asteroids }, Effects.none)
+                        Nothing ->
+                            ( model, Effects.none )
             else
                 ( model, Effects.none)
 

@@ -3,6 +3,7 @@ module Messages (..) where
 import Json.Encode as Encode
 import Json.Decode as Decode exposing ((:=))
 import Agents exposing (..)
+import Debug exposing (log)
 
 type alias MessageTypes =
     { empty: Int
@@ -15,6 +16,11 @@ type alias MessageTypes =
 type alias WelcomeMessage =
     { me: Player
     , players: List Player
+    , asteroids: List Asteroid
+    }
+
+type alias DeltaMessage =
+    { players: List Player
     , asteroids: List Asteroid
     }
 
@@ -62,7 +68,25 @@ welcomeMessage msg =
         in
             case result of
                 Ok wm -> Just wm
-                Err _ -> Nothing
+                Err err -> Nothing
+    else
+        Nothing
+
+deltaMessage: Message -> Maybe DeltaMessage
+deltaMessage msg =
+    if msg.messageType == messageTypes.delta then
+        let
+            result =
+                Decode.decodeValue
+                    (Decode.object2
+                        DeltaMessage
+                        ("players" := Decode.list playerDecoder)
+                        ("asteroids" := Decode.list asteroidDecoder))
+                    msg.payload
+        in
+            case result of
+                Ok m -> Just m
+                Err err -> Nothing
     else
         Nothing
 
