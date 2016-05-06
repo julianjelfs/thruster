@@ -10,6 +10,9 @@ type alias Player =
     , team: String
     }
 
+nullPlayer =
+    Player 0 0 0 False "" "" ""
+
 type alias Asteroid =
     { x: Float
     , y: Float

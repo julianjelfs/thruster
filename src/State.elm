@@ -3,7 +3,7 @@ module State (..) where
 import Types exposing (..)
 import Join.State
 import Player.State
-import Agents exposing (Player)
+import Agents exposing (Player, nullPlayer)
 import Effects exposing (Effects, Never)
 import Debug exposing (log)
 import Messages exposing (messageTypes, welcomeMessage, deltaMessage)
@@ -42,10 +42,14 @@ update action model =
 
         PlayerAction sub ->
             let
+                me = model.me
+                    |> Maybe.withDefault nullPlayer
+
                 (updated, fx) =
-                    Player.State.update sub model.me
+                    Player.State.update sub me
+
             in
-                ( { model | me = updated }, Effects.map PlayerAction fx )
+                ( { model | me = (Just updated) }, Effects.map PlayerAction fx )
 
         JoinAction sub ->
             let

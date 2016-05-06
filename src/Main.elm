@@ -37,7 +37,8 @@ rotateSignal =
                 |> Player.Types.Rotate
                 |> PlayerAction
     in
-        Signal.map toAction Keyboard.arrows
+        (Signal.sampleOn (Time.fps 60) Keyboard.arrows)
+            |> Signal.map toAction
 
 main : Signal.Signal Html
 main =

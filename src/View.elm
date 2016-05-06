@@ -10,14 +10,15 @@ import Graphics.Element exposing (..)
 import Starfield.View as Starfield
 import Asteroid.View as Asteroid
 import Player.View as Player
+import Agents exposing (Player, nullPlayer)
 import List
 
-canvas {joinedAt, asteroids, players} dim =
+canvas {joinedAt, asteroids, players, me} dim =
     let
         (w, h) = dim
         stars = Starfield.root joinedAt dim
         asts = Asteroid.root asteroids dim
-        plyr = Player.root players dim
+        plyr = Player.root [(Maybe.withDefault nullPlayer me)] dim
         agents = List.concat [stars, asts, plyr]
     in
         collage w h agents

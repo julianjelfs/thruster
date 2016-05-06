@@ -5,17 +5,12 @@ import Agents exposing (Player)
 import Effects exposing (Effects, Never)
 import Debug exposing (log)
 
-update : Action -> Maybe Player -> ( Maybe Player, Effects Action )
+update : Action -> Player -> ( Player, Effects Action )
 update action player =
     case action of
         Rotate arrows ->
             let
                 xy = (log "arrows: " arrows)
-                -- send back an update to the server ?
-                -- or should we just do that on an interval?
+                dec = arrows.x * 5
             in
-                case player of
-                    Just p ->
-                        (player, Effects.none )
-                    Nothing ->
-                        (player, Effects.none )
+                ( { player | angle = player.angle - (toFloat dec) }, Effects.none )
