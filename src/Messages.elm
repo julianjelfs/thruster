@@ -33,9 +33,13 @@ type alias Message =
     , payload: Encode.Value
     }
 
+
+playerCtr a b c d e f g =
+    Player a b c d e f g 0 0 0
+
 playerDecoder =
     Decode.object7
-        Player
+        playerCtr
         ("x" := Decode.float)
         ("y" := Decode.float)
         ("angle" := Decode.float)

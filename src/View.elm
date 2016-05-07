@@ -12,6 +12,7 @@ import Asteroid.View as Asteroid
 import Player.View as Player
 import Agents exposing (Player, nullPlayer)
 import List
+import Debug.View
 
 canvas {joinedAt, asteroids, players, me} dim =
     let
@@ -30,7 +31,8 @@ view address model =
         div
             []
             [ h1 [ class "welcome" ] [ Html.text "Woohoo, welcome to the game!" ]
-            , canvas model model.screen ]
+            , canvas model model.screen
+            , Debug.View.root model.me]
     else
         div
             []

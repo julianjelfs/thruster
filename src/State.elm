@@ -46,7 +46,7 @@ update action model =
                     |> Maybe.withDefault nullPlayer
 
                 (updated, fx) =
-                    Player.State.update sub me
+                    Player.State.update sub me model.screen
 
             in
                 ( { model | me = (Just updated) }, Effects.map PlayerAction fx )
