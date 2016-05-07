@@ -12,6 +12,7 @@ Elm.Main.make = function (_elm) {
    $Mailboxes = Elm.Mailboxes.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Messages = Elm.Messages.make(_elm),
+   $Player$Signals = Elm.Player.Signals.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
    $StartApp = Elm.StartApp.make(_elm),
@@ -57,7 +58,9 @@ Elm.Main.make = function (_elm) {
               $Mailboxes.outboundSocketMailbox.address)
               ,_1: $Effects.none};
    var app = $StartApp.start({init: init
-                             ,inputs: _U.list([inboundSocketSignal,screenSizeSignal])
+                             ,inputs: _U.list([inboundSocketSignal
+                                              ,screenSizeSignal
+                                              ,$Player$Signals.moveSignal])
                              ,update: $State.update
                              ,view: $View.view});
    var main = app.html;

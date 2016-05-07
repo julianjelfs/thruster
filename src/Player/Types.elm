@@ -3,5 +3,5 @@ module Player.Types (..) where
 import Messages exposing (..)
 
 type Action =
-    Rotate { x: Int, y: Int }
+    Move { x: Int, y: Int }
 
