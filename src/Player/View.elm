@@ -9,6 +9,14 @@ import Debug exposing (log)
 grad =
     linear (0,0) (40,40) [(0, blue), (1, green)]
 
+teamColour p =
+    if p.team == "Green" then
+        green
+    else if p.team == "Blue" then
+        blue
+    else
+        yellow
+
 rocket =
     polygon ([ (-20,0)
             , (-8,5)
@@ -26,10 +34,13 @@ rocket =
             ] |> List.map (\(x,y) -> ((x-5)*2, y*2)))
 
 player p =
-    rocket
-        |> gradient grad
-        |> move (p.x, p.y)
-        |> rotate (degrees p.angle)
+    let
+        tc = teamColour p
+    in
+        rocket
+            |> filled tc
+            |> move (p.x, p.y)
+            |> rotate (degrees p.angle)
 
 root players (w, h) =
     players

@@ -15,6 +15,21 @@ newPosition angle {y} =
     in
         (dx, dy)
 
+
+constrain: Float -> Int -> Float
+constrain dim limit =
+    let
+        limitf = toFloat limit
+        upper = limitf / 2
+        lower = negate upper
+    in
+        if dim > upper then
+            lower
+        else if dim < lower then
+            upper
+        else
+            dim
+
 update : Action -> Player -> (Int, Int) -> ( Player, Effects Action )
 update action player (w, h) =
     case action of
@@ -22,10 +37,11 @@ update action player (w, h) =
             let
                 angle = player.angle + (wasd.x * speed |> toFloat |> negate)
                 (x, y) = (newPosition (degrees angle) wasd)
-                --if we go out of bounds we need to loop back through the other side
+                px = constrain player.x w
+                py = constrain player.y h
             in
                 ( { player |
                     angle = angle
-                    , x = player.x + x
-                    , y = player.y + y
+                    , x = px + x
+                    , y = py + y
                     }, Effects.none )
