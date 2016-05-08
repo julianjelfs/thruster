@@ -8,13 +8,13 @@ type alias Player =
     , id: String
     , name: String
     , team: String
-    , dx: Float
-    , dy: Float
-    , da: Float
+    , speed: Float
+    , movingAngle: Float
     }
 
+
 nullPlayer =
-    Player 0 0 0 False "" "" "" 0 0 0
+    Player 0 0 0 False "" "" "" 0 0
 
 type alias Asteroid =
     { x: Float

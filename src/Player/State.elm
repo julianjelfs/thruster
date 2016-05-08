@@ -5,13 +5,13 @@ import Agents exposing (Player)
 import Effects exposing (Effects, Never)
 import Debug exposing (log)
 
-speed = 10
+tolerance = 0.5
+rotationSpeed = 10
 
-newPosition angle {y} =
+newPosition speed angle =
     let
-        h = (toFloat y) * speed
-        dx = h * (cos angle)
-        dy = h * (sin angle)
+        dx = speed * (cos angle)
+        dy = speed * (sin angle)
     in
         (dx, dy)
 
@@ -30,13 +30,31 @@ constrain dim limit =
         else
             dim
 
+currentSpeed {speed} yf =
+    if yf /= 0 then
+        15
+    else if speed > tolerance then
+        speed * 0.95
+    else
+        0
+
+currentAngle {movingAngle} yf angle =
+    if yf /= 0 then
+        angle
+    else
+        movingAngle
+
+
 update : Action -> Player -> (Int, Int) -> ( Player, Effects Action )
 update action player (w, h) =
     case action of
         Move wasd ->
             let
-                angle = player.angle + (wasd.x * speed |> toFloat |> negate)
-                (x, y) = (newPosition (degrees angle) wasd)
+                (xf, yf) = (toFloat wasd.x, toFloat wasd.y)
+                speed = currentSpeed player yf
+                angle = player.angle + (xf * rotationSpeed |> negate)
+                movingAngle = currentAngle player yf angle
+                (x, y) = (newPosition speed (degrees movingAngle))
                 px = constrain player.x w
                 py = constrain player.y h
             in
@@ -44,4 +62,6 @@ update action player (w, h) =
                     angle = angle
                     , x = px + x
                     , y = py + y
+                    , speed = speed
+                    , movingAngle = movingAngle
                     }, Effects.none )

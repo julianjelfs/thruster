@@ -11,6 +11,7 @@ root player =
                 [ div [] [ text ("name: " ++ (toString p.name)) ]
                 , div [] [ text ("x: " ++ (toString p.x)) ]
                 , div [] [ text ("y: " ++ (toString p.y)) ]
+                , div [] [ text ("speed: " ++ (toString p.speed)) ]
                 , div [] [ text ("a: " ++ (toString p.angle)) ]
                 ]
         Nothing ->
