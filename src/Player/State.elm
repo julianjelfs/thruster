@@ -32,8 +32,11 @@ constrain dim limit =
 
 currentSpeed {speed} yf =
     if yf /= 0 then
-        15
-    else if speed > tolerance then
+        if yf < 0 then
+            -15
+        else
+            15
+    else if (abs speed) > tolerance then
         speed * 0.95
     else
         0
