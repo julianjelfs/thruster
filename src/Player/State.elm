@@ -3,6 +3,7 @@ module Player.State (..) where
 import Player.Types exposing (..)
 import Agents exposing (Player)
 import Effects exposing (Effects, Never)
+import Messages exposing (..)
 import Debug exposing (log)
 
 tolerance = 0.5
@@ -60,11 +61,14 @@ update action player (w, h) =
                 (x, y) = (newPosition speed (degrees movingAngle))
                 px = constrain player.x w
                 py = constrain player.y h
+
+                updatedPlayer =
+                    { player |
+                        angle = angle
+                        , x = px + x
+                        , y = py + y
+                        , speed = speed
+                        , movingAngle = movingAngle
+                        }
             in
-                ( { player |
-                    angle = angle
-                    , x = px + x
-                    , y = py + y
-                    , speed = speed
-                    , movingAngle = movingAngle
-                    }, Effects.none )
+                ( updatedPlayer, Effects.none )

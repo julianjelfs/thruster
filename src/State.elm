@@ -6,11 +6,14 @@ import Player.State
 import Agents exposing (Player, nullPlayer)
 import Effects exposing (Effects, Never)
 import Debug exposing (log)
-import Messages exposing (messageTypes, welcomeMessage, deltaMessage)
+import Messages exposing (messageTypes, welcomeMessage, deltaMessage, updateMessage)
 
 update : Action -> Model -> ( Model, Effects Action )
 update action model =
     case action of
+        TaskDone () ->
+            (model, Effects.none)
+
         ScreenSizeChanged dim ->
             ( { model | screen = (log "screen size: " dim) }, Effects.none)
         InboundMessage (time, msg) ->
@@ -47,9 +50,10 @@ update action model =
 
                 (updated, fx) =
                     Player.State.update sub me model.screen
-
             in
-                ( { model | me = (Just updated) }, Effects.map PlayerAction fx )
+                ( { model | me = (Just updated) }, (Signal.send model.outSocket (updateMessage updated)
+                    |> Effects.task
+                    |> Effects.map TaskDone ))
 
         JoinAction sub ->
             let

@@ -8,7 +8,7 @@ const config = {
     numAsteroids: 50,
     thrustAngle: 60,
     startAngle: 0,
-    updatesPerSecond: 20
+    updatesPerSecond: 16
 }
 
 let asteroids = {},
@@ -111,7 +111,7 @@ module.exports = {
         return delta()
     },
     updatePlayer: (id, player) => {
-        players[id] = player
+        players[id] = Object.assign(players[id], player)
     },
     delta: delta,
     removePlayer: id => {

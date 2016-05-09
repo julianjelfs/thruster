@@ -13,6 +13,9 @@ type alias MessageTypes =
     , delta: Int
     }
 
+type alias UpdateMessage =
+    { me: Player }
+
 type alias WelcomeMessage =
     { me: Player
     , players: List Player
@@ -98,6 +101,17 @@ deltaMessage msg =
 emptyMessage: Message
 emptyMessage =
     Message messageTypes.empty Encode.null
+
+updateMessage: Player -> Message
+updateMessage player =
+    Message
+        messageTypes.update
+        (Encode.object
+            [ ("id", Encode.string player.id)
+            , ("x", Encode.float player.x)
+            , ("y", Encode.float player.y)
+            , ("angle", Encode.float player.angle)
+            , ("thrusting", Encode.bool player.thrusting) ])
 
 joinMessage: String -> String -> Message
 joinMessage name team =

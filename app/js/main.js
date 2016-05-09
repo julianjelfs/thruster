@@ -27,6 +27,11 @@ app.ports.outboundSocket.subscribe(msg => {
     switch (msg.messageType) {
         case messageTypes.join: startGame(msg.payload)
             break;
+        case messageTypes.update: 
+            if(socket) {
+                socket.emit('updatePlayer', msg.payload)
+            }
+            break;
     }
 })
 
