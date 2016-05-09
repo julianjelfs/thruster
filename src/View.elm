@@ -19,8 +19,10 @@ canvas {joinedAt, asteroids, players, me} dim =
         (w, h) = dim
         stars = Starfield.root joinedAt dim
         asts = Asteroid.root asteroids dim
-        plyr = Player.root [(Maybe.withDefault nullPlayer me)] dim
-        agents = List.concat [stars, asts, plyr]
+        definitelyMe = (Maybe.withDefault nullPlayer me)
+        plyr = Player.root [definitelyMe] dim
+        notMe = List.filter (\p -> p.id /= definitelyMe.id) players
+        agents = List.concat [stars, asts, plyr, (Player.root notMe dim)]
     in
         collage w h agents
             |> fromElement

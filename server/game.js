@@ -8,7 +8,7 @@ const config = {
     numAsteroids: 50,
     thrustAngle: 60,
     startAngle: 0,
-    updatesPerSecond: 60
+    updatesPerSecond: 20
 }
 
 let asteroids = {},
