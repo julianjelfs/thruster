@@ -1,4 +1,4 @@
-module Agents (..) where
+module Agents exposing(..)
 
 type alias Player =
     { x: Float

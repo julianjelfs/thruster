@@ -1,7 +1,7 @@
-module Player.Types (..) where
+module Player.Types exposing(..)
 
 import Messages exposing (..)
 
-type Action =
+type Msg =
     Move { x: Int, y: Int }
 

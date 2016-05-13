@@ -1,4 +1,4 @@
-module Messages (..) where
+module Messages exposing(..)
 
 import Json.Encode as Encode
 import Json.Decode as Decode exposing ((:=))

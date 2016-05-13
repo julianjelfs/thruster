@@ -1,12 +1,13 @@
-module View (..) where
+module View exposing(..)
 
 import Types exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.App exposing (map)
 import Join.View
 import Color exposing (..)
-import Graphics.Collage exposing (..)
-import Graphics.Element exposing (..)
+import Collage exposing (..)
+import Element exposing (..)
 import Starfield.View as Starfield
 import Asteroid.View as Asteroid
 import Player.View as Player
@@ -27,8 +28,8 @@ canvas {joinedAt, asteroids, players, me} dim =
         collage w h agents
             |> fromElement
 
-view : Signal.Address Action -> Model -> Html
-view address model =
+view : Model -> Html Msg
+view model =
     if model.joined then
         div
             []
@@ -38,4 +39,4 @@ view address model =
     else
         div
             []
-            [ Join.View.view (Signal.forwardTo address JoinAction) model.join]
+            [ map JoinMsg (Join.View.view model.join) ]

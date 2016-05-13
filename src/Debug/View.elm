@@ -1,4 +1,4 @@
-module Debug.View (..) where
+module Debug.View exposing(..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)

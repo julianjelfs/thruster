@@ -1,8 +1,8 @@
-module Join.Types (..) where
+module Join.Types exposing(..)
 
 import Messages exposing (..)
 
-type Action =
+type Msg =
     TaskDone ()
     | JoinGame String String
     | UpdateName String
@@ -11,9 +11,8 @@ type Action =
 type alias Model =
   { name: String
   , team: String
-  , outboundSocketAddress: Signal.Address Message
   }
 
-initialModel : Signal.Address Message -> Model
-initialModel address =
-  Model "" "Blue" address
+initialModel : Model
+initialModel =
+  Model "" "Blue"

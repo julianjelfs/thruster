@@ -1,4 +1,4 @@
-module Join.View (..) where
+module Join.View exposing(..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -6,23 +6,18 @@ import Html.Events exposing (..)
 import Join.Types exposing (..)
 import Json.Decode exposing (succeed)
 
-view : Signal.Address Action -> Model -> Html
-view address model =
+view : Model -> Html Msg
+view model =
     Html.form
         [ class "join-form"
-        , onWithOptions
-            "submit"
-            { preventDefault = True
-            , stopPropagation = False }
-            ( succeed Nothing )
-            (\_ -> Signal.message address (JoinGame model.name model.team)) ]
+        , onSubmit (JoinGame model.name model.team)]
         [ div 
             [] 
             [ label [for "name-field"] [ text "Name" ] 
             , input 
                 [ id "name-field"
                 , autofocus True
-                , on "input" targetValue (\n -> Signal.message address (UpdateName n))
+                , onInput UpdateName
                 , placeholder "Enter your name"
                 , value model.name ] [] ] 
         , div
@@ -31,7 +26,7 @@ view address model =
             , select
                 [ class "form-control"
                 , id "team"
-                , on "change" targetValue (\v -> Signal.message address (v |> UpdateTeam))]
+                , on "change" (Json.map UpdateTeam targetValue)
                 [ option
                     [value "Blue"] [ text "Blue" ]
                 , option

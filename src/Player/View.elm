@@ -1,8 +1,8 @@
-module Player.View (..) where
+module Player.View exposing(..)
 
 import Color exposing (..)
-import Graphics.Collage exposing (..)
-import Graphics.Element exposing (..)
+import Collage exposing (..)
+import Element exposing (..)
 import List exposing (map)
 import Debug exposing (log)
 

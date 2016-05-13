@@ -1,40 +1,29 @@
-module Main (..) where
+module Main exposing(..)
 
 import Types exposing (..)
 import View exposing (view)
 import State exposing (update)
-import Effects exposing (Effects, Never)
 import Task
-import Mailboxes exposing (..)
-import StartApp
 import Window
-import Html exposing (..)
+import Html.App as Html
 import Messages exposing (..)
 import Debug exposing (log)
 import Time exposing (timestamp)
 import Player.Signals exposing (..)
 
 -- START APP
-init : ( Model, Effects Action )
+init : ( Model, Cmd Msg )
 init =
-  ( initialModel initialWindowSize outboundSocketMailbox.address, Effects.none )
-
-app : StartApp.App Model
-app =
-  StartApp.start
-    { init = init
-    , inputs = [inboundSocketSignal, screenSizeSignal, moveSignal]
-    , update = update
-    , view = view
-    }
+  ( initialModel initialWindowSize, Cmd.none )
 
 main : Signal.Signal Html
 main =
-  app.html
-
-port runner : Signal (Task.Task Never ())
-port runner =
-  app.tasks
+    Html.program
+        { init = init
+        , update = update
+        , view = view
+        , subscriptions = \_ -> Sub.none
+        }
 
 port outboundSocket : Signal Message
 port outboundSocket =
@@ -45,10 +34,11 @@ port inboundSocket : Signal Message
 -- yuck this is a hack but it appears to me required
 port initialWindowSize : (Int, Int)
 
-inboundSocketSignal: Signal Action
+inboundSocketSignal: Signal Msg
 inboundSocketSignal =
     Signal.map InboundMessage (timestamp inboundSocket)
 
-screenSizeSignal: Signal Action
+--this needs to be a subscription
+screenSizeSignal: Signal Msg
 screenSizeSignal =
     Signal.map ScreenSizeChanged Window.dimensions

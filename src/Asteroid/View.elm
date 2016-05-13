@@ -1,8 +1,8 @@
-module Asteroid.View (..) where
+module Asteroid.View exposing(..)
 
 import Color exposing (..)
-import Graphics.Collage exposing (..)
-import Graphics.Element exposing (..)
+import Collage exposing (..)
+import Element exposing (..)
 import List exposing (map)
 
 line =

@@ -1,4 +1,4 @@
-module Types (..) where
+module Types exposing(..)
 
 import Join.Types
 import Player.Types
@@ -6,9 +6,9 @@ import Messages exposing (..)
 import Agents exposing (..)
 import Time
 
-type Action =
-    JoinAction Join.Types.Action
-    | PlayerAction Player.Types.Action
+type Msg =
+    JoinMsg Join.Types.Msg
+    | PlayerMsg Player.Types.Msg
     | InboundMessage (Time.Time, Message)
     | ScreenSizeChanged (Int, Int)
     | TaskDone ()
@@ -21,10 +21,9 @@ type alias Model =
     , me: Maybe Player
     , players: List Player
     , asteroids: List Asteroid
-    , outSocket: Signal.Address Message
     }
 
-initialModel : (Int, Int) -> Signal.Address Message -> Model
+initialModel : (Int, Int) -> Model
 initialModel screenSize address =
     { join = (Join.Types.initialModel address)
     , joined = False
@@ -33,5 +32,4 @@ initialModel screenSize address =
     , me = Nothing
     , players = []
     , asteroids = []
-    , outSocket = address
     }

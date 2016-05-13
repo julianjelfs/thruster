@@ -1,9 +1,9 @@
-module Starfield.View (..) where
+module Starfield.View exposing(..)
 
 import Html exposing (..)
 import Color exposing (..)
-import Graphics.Collage exposing (..)
-import Graphics.Element exposing (..)
+import Collage exposing (..)
+import Element exposing (..)
 import List exposing (map)
 import Random exposing (generate, float, initialSeed)
 import Time

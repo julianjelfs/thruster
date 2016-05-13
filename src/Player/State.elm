@@ -1,8 +1,7 @@
-module Player.State (..) where
+module Player.State exposing(..)
 
 import Player.Types exposing (..)
 import Agents exposing (Player)
-import Effects exposing (Effects, Never)
 import Messages exposing (..)
 import Debug exposing (log)
 
@@ -49,9 +48,9 @@ currentAngle {movingAngle} yf angle =
         movingAngle
 
 
-update : Action -> Player -> (Int, Int) -> ( Player, Effects Action )
-update action player (w, h) =
-    case action of
+update : Msg -> Player -> (Int, Int) -> ( Player, Cmd Msg )
+update msg player (w, h) =
+    case msg of
         Move wasd ->
             let
                 (xf, yf) = (toFloat wasd.x, toFloat wasd.y)
@@ -71,4 +70,4 @@ update action player (w, h) =
                         , movingAngle = movingAngle
                         }
             in
-                ( updatedPlayer, Effects.none )
+                ( updatedPlayer, Cmd.none )

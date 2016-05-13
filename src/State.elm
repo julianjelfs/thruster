@@ -1,21 +1,20 @@
-module State (..) where
+module State exposing(..)
 
 import Types exposing (..)
 import Join.State
 import Player.State
 import Agents exposing (Player, nullPlayer)
-import Effects exposing (Effects, Never)
 import Debug exposing (log)
 import Messages exposing (messageTypes, welcomeMessage, deltaMessage, updateMessage)
 
-update : Action -> Model -> ( Model, Effects Action )
-update action model =
-    case action of
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
         TaskDone () ->
-            (model, Effects.none)
+            (model, Cmd.none)
 
         ScreenSizeChanged dim ->
-            ( { model | screen = (log "screen size: " dim) }, Effects.none)
+            ( { model | screen = (log "screen size: " dim) }, Cmd.none)
         InboundMessage (time, msg) ->
             if msg.messageType == messageTypes.welcome then
                 let
@@ -27,9 +26,9 @@ update action model =
                                 , joinedAt = Just time
                                 , me = Just wm.me
                                 , players = wm.players
-                                , asteroids = wm.asteroids }, Effects.none)
+                                , asteroids = wm.asteroids }, Cmd.none)
                         Nothing ->
-                            ( model, Effects.none )
+                            ( model, Cmd.none )
             else if msg.messageType == messageTypes.delta then
                 let
                     maybeDelta = deltaMessage msg
@@ -37,13 +36,13 @@ update action model =
                     case maybeDelta of
                         Just d ->
                             ( { model | players = d.players
-                                , asteroids = d.asteroids }, Effects.none)
+                                , asteroids = d.asteroids }, Cmd.none)
                         Nothing ->
-                            ( model, Effects.none )
+                            ( model, Cmd.none )
             else
-                ( model, Effects.none)
+                ( model, Cmd.none)
 
-        PlayerAction sub ->
+        PlayerMsg sub ->
             let
                 me = model.me
                     |> Maybe.withDefault nullPlayer
@@ -51,13 +50,16 @@ update action model =
                 (updated, fx) =
                     Player.State.update sub me model.screen
             in
+                ({ model | me = (Just updated) }, Cmd.none)
+                {-- TODO just use a port directly for this
                 ( { model | me = (Just updated) }, (Signal.send model.outSocket (updateMessage updated)
                     |> Effects.task
                     |> Effects.map TaskDone ))
+                --}
 
-        JoinAction sub ->
+        JoinMsg sub ->
             let
                 (updated, fx) =
                     Join.State.update sub model.join
             in
-                ( { model | join = updated }, Effects.map JoinAction fx )
+                ( { model | join = updated }, Cmd.map JoinMsg fx )
