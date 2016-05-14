@@ -9,7 +9,7 @@ import Time
 type Msg =
     JoinMsg Join.Types.Msg
     | PlayerMsg Player.Types.Msg
-    | InboundMessage (Time.Time, Message)
+    | InboundMessage Message
     | ScreenSizeChanged (Int, Int)
     | TaskDone ()
 
@@ -23,12 +23,12 @@ type alias Model =
     , asteroids: List Asteroid
     }
 
-initialModel : (Int, Int) -> Model
-initialModel screenSize address =
-    { join = (Join.Types.initialModel address)
+initialModel : Model
+initialModel =
+    { join = Join.Types.initialModel
     , joined = False
     , joinedAt = Nothing
-    , screen = screenSize
+    , screen = (0,0)
     , me = Nothing
     , players = []
     , asteroids = []

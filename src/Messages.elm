@@ -4,6 +4,7 @@ import Json.Encode as Encode
 import Json.Decode as Decode exposing ((:=))
 import Agents exposing (..)
 import Debug exposing (log)
+import Time exposing (Time)
 
 type alias MessageTypes =
     { empty: Int
@@ -20,6 +21,7 @@ type alias WelcomeMessage =
     { me: Player
     , players: List Player
     , asteroids: List Asteroid
+    , timestamp: Time
     }
 
 type alias DeltaMessage =
@@ -67,11 +69,12 @@ welcomeMessage msg =
         let
             result =
                 Decode.decodeValue
-                    (Decode.object3
+                    (Decode.object4
                         WelcomeMessage
                         ("me" := playerDecoder)
                         ("players" := Decode.list playerDecoder)
-                        ("asteroids" := Decode.list asteroidDecoder))
+                        ("asteroids" := Decode.list asteroidDecoder)
+                        ("timestamp" := Decode.float))
                     msg.payload
         in
             case result of

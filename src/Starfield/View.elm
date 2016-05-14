@@ -5,11 +5,11 @@ import Color exposing (..)
 import Collage exposing (..)
 import Element exposing (..)
 import List exposing (map)
-import Random exposing (generate, float, initialSeed)
+import Random exposing (float, initialSeed, step)
 import Time
 
 randomFloat seed (min, max) =
-    generate (float min max) seed
+    step (float min max) seed
 
 createStars num stars seed width height =
     if (List.length stars == num) then

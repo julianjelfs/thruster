@@ -8,37 +8,28 @@ import Window
 import Html.App as Html
 import Messages exposing (..)
 import Debug exposing (log)
-import Time exposing (timestamp)
-import Player.Signals exposing (..)
+import Player.Subs exposing (..)
+import Ports exposing (inboundSocket)
 
 -- START APP
 init : ( Model, Cmd Msg )
 init =
-  ( initialModel initialWindowSize, Cmd.none )
+  ( initialModel, initialWindowSize )
 
-main : Signal.Signal Html
+initialWindowSize : Cmd Msg
+initialWindowSize =
+    Window.size
+        |> Task.map (\s -> (s.width, s.height))
+        |> Task.perform TaskDone ScreenSizeChanged
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.batch [eventLoop, windowResize, (inboundSocket InboundMessage)]
+
 main =
     Html.program
         { init = init
         , update = update
         , view = view
-        , subscriptions = \_ -> Sub.none
+        , subscriptions = subscriptions
         }
-
-port outboundSocket : Signal Message
-port outboundSocket =
-    outboundSocketMailbox.signal
-
-port inboundSocket : Signal Message
-
--- yuck this is a hack but it appears to me required
-port initialWindowSize : (Int, Int)
-
-inboundSocketSignal: Signal Msg
-inboundSocketSignal =
-    Signal.map InboundMessage (timestamp inboundSocket)
-
---this needs to be a subscription
-screenSizeSignal: Signal Msg
-screenSizeSignal =
-    Signal.map ScreenSizeChanged Window.dimensions

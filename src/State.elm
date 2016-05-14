@@ -6,6 +6,7 @@ import Player.State
 import Agents exposing (Player, nullPlayer)
 import Debug exposing (log)
 import Messages exposing (messageTypes, welcomeMessage, deltaMessage, updateMessage)
+import Ports exposing (outboundSocket)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -15,7 +16,7 @@ update msg model =
 
         ScreenSizeChanged dim ->
             ( { model | screen = (log "screen size: " dim) }, Cmd.none)
-        InboundMessage (time, msg) ->
+        InboundMessage msg ->
             if msg.messageType == messageTypes.welcome then
                 let
                     maybeWm = welcomeMessage msg
@@ -23,7 +24,7 @@ update msg model =
                     case maybeWm of
                         Just wm ->
                             ( { model | joined = True
-                                , joinedAt = Just time
+                                , joinedAt = Just wm.timestamp
                                 , me = Just wm.me
                                 , players = wm.players
                                 , asteroids = wm.asteroids }, Cmd.none)
@@ -50,12 +51,7 @@ update msg model =
                 (updated, fx) =
                     Player.State.update sub me model.screen
             in
-                ({ model | me = (Just updated) }, Cmd.none)
-                {-- TODO just use a port directly for this
-                ( { model | me = (Just updated) }, (Signal.send model.outSocket (updateMessage updated)
-                    |> Effects.task
-                    |> Effects.map TaskDone ))
-                --}
+                ({ model | me = (Just updated) }, (outboundSocket (updateMessage updated)))
 
         JoinMsg sub ->
             let

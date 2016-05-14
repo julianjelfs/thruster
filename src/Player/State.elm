@@ -51,6 +51,9 @@ currentAngle {movingAngle} yf angle =
 update : Msg -> Player -> (Int, Int) -> ( Player, Cmd Msg )
 update msg player (w, h) =
     case msg of
+        Tick _ ->
+            (player, Cmd.none)
+
         Move wasd ->
             let
                 (xf, yf) = (toFloat wasd.x, toFloat wasd.y)

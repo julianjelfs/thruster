@@ -11,17 +11,15 @@ const messageTypes = {
     update: 3,
     delta: 4
 }
-
-const app = Elm.fullscreen(Elm.Main, {
+/*
+{
     inboundSocket: {
         messageType: 0,
         payload: null
-    },
-    initialWindowSize : [
-        document.documentElement.clientWidth,
-        document.documentElement.clientHeight
-    ]
-})
+    }
+}
+*/
+const app = Elm.Main.fullscreen()
 
 app.ports.outboundSocket.subscribe(msg => {
     switch (msg.messageType) {
@@ -59,7 +57,7 @@ function setupSocket(sock) {
     sock.on('welcome', (s) => {
         app.ports.inboundSocket.send({
             messageType: messageTypes.welcome,
-            payload: s
+            payload: Object.assign(s, {timestamp:+new Date()})
         })        
     })
 

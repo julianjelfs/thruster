@@ -1,10 +1,10 @@
-module Join.View exposing(..)
+module Join.View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Join.Types exposing (..)
-import Json.Decode exposing (succeed)
+import Json.Decode as Json
 
 view : Model -> Html Msg
 view model =
@@ -26,7 +26,7 @@ view model =
             , select
                 [ class "form-control"
                 , id "team"
-                , on "change" (Json.map UpdateTeam targetValue)
+                , on "change" (Json.map UpdateTeam targetValue) ]
                 [ option
                     [value "Blue"] [ text "Blue" ]
                 , option

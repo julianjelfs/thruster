@@ -26,7 +26,7 @@ canvas {joinedAt, asteroids, players, me} dim =
         agents = List.concat [stars, asts, plyr, (Player.root notMe dim)]
     in
         collage w h agents
-            |> fromElement
+            |> toHtml
 
 view : Model -> Html Msg
 view model =
