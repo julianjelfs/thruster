@@ -2,8 +2,11 @@ module Player.Types exposing(..)
 
 import Messages exposing (..)
 import Time
+import Keyboard exposing (KeyCode)
 
 type Msg =
-    Tick Time.Time
+    KeyDown KeyCode
+    | KeyUp KeyCode
+    | Tick Time.Time
     | Move { x: Int, y: Int }
 

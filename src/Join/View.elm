@@ -5,12 +5,14 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Join.Types exposing (..)
 import Json.Decode as Json
+import Debug exposing (log)
 
 view : Model -> Html Msg
 view model =
     Html.form
         [ class "join-form"
-        , onSubmit (JoinGame model.name model.team)]
+        , onSubmit (JoinGame (log "name: " model.name) model.team)
+        ]
         [ div 
             [] 
             [ label [for "name-field"] [ text "Name" ] 

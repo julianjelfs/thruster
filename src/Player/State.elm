@@ -50,8 +50,20 @@ currentAngle {movingAngle} yf angle =
 
 update : Msg -> Player -> (Int, Int) -> ( Player, Cmd Msg )
 update msg player (w, h) =
+    -- use the key up and down to basically simulate the old wasd
+    -- this is so much worse
     case msg of
-        Tick _ ->
+        KeyDown code ->
+            let
+                c = log "down: " code
+            in
+                (player, Cmd.none)
+        KeyUp code ->
+            let
+                c = log "up: " code
+            in
+                (player, Cmd.none)
+        Tick t ->
             (player, Cmd.none)
 
         Move wasd ->
@@ -73,4 +85,4 @@ update msg player (w, h) =
                         , movingAngle = movingAngle
                         }
             in
-                ( updatedPlayer, Cmd.none )
+                ( (log "this should not be happening: " updatedPlayer), Cmd.none )

@@ -7,6 +7,7 @@ import Agents exposing (Player, nullPlayer)
 import Debug exposing (log)
 import Messages exposing (messageTypes, welcomeMessage, deltaMessage, updateMessage)
 import Ports exposing (outboundSocket)
+import Debug exposing (log)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -24,7 +25,7 @@ update msg model =
                     case maybeWm of
                         Just wm ->
                             ( { model | joined = True
-                                , joinedAt = Just wm.timestamp
+                                , joinedAt = Just (log "welcome at: " wm.timestamp)
                                 , me = Just wm.me
                                 , players = wm.players
                                 , asteroids = wm.asteroids }, Cmd.none)

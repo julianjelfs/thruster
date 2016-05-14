@@ -23,7 +23,9 @@ const app = Elm.Main.fullscreen()
 
 app.ports.outboundSocket.subscribe(msg => {
     switch (msg.messageType) {
-        case messageTypes.join: startGame(msg.payload)
+        case messageTypes.join: 
+            console.log('we got a join message: ' + JSON.stringify(msg.payload))
+            startGame(msg.payload)
             break;
         case messageTypes.update: 
             if(socket) {
@@ -55,6 +57,7 @@ function setupSocket(sock) {
 
     // Handle connection.
     sock.on('welcome', (s) => {
+        console.log('we got a welcome message' + JSON.stringify(Object.assign(s, {timestamp:+new Date()})))
         app.ports.inboundSocket.send({
             messageType: messageTypes.welcome,
             payload: Object.assign(s, {timestamp:+new Date()})
