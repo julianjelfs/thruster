@@ -10,6 +10,7 @@ type Msg =
     JoinMsg Join.Types.Msg
     | PlayerMsg Player.Types.Msg
     | InboundMessage Message
+    | NewMessage String
     | ScreenSizeChanged (Int, Int)
     | TaskDone ()
 

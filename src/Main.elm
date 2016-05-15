@@ -25,7 +25,12 @@ initialWindowSize =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     --the event loop sub is causing everything to go haywire
-    Sub.batch [keyDown, keyUp, eventLoop, windowResize, (inboundSocket InboundMessage)]
+    Sub.batch [ keyDown
+              , keyUp
+              , eventLoop
+              , windowResize
+              , (inboundSocket InboundMessage)
+              ]
 
 main =
     Html.program

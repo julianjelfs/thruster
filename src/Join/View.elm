@@ -9,9 +9,9 @@ import Debug exposing (log)
 
 view : Model -> Html Msg
 view model =
-    Html.form
+    div
         [ class "join-form"
-        , onSubmit (JoinGame (log "name: " model.name) model.team)
+        --, onSubmit (JoinGame (log "name: " model.name) model.team)
         ]
         [ div 
             [] 
@@ -36,7 +36,8 @@ view model =
                 ]
             ]
         , button
-            [ type' "submit" ]
+            [ type' "button"
+            , onClick (JoinGame (log "name: " model.name) model.team)]
             [ text "join the game" ]
         ]
 

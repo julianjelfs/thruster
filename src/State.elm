@@ -14,6 +14,11 @@ update msg model =
     case msg of
         TaskDone () ->
             (model, Cmd.none)
+        NewMessage str ->
+            let
+                s = log "msg: " str
+            in
+                (model, Cmd.none)
 
         ScreenSizeChanged dim ->
             ( { model | screen = (log "screen size: " dim) }, Cmd.none)

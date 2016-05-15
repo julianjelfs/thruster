@@ -9,7 +9,7 @@ import Keyboard exposing (downs, ups)
 
 eventLoop: Sub Msg
 eventLoop =
-    every second Player.Types.Tick
+    every (millisecond * 16) Player.Types.Tick
         |> Sub.map PlayerMsg
 
 windowResize: Sub Msg

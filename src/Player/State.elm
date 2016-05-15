@@ -48,6 +48,11 @@ currentAngle {movingAngle} yf angle =
         movingAngle
 
 
+up = 38
+down = 40
+left = 37
+right = 39
+
 update : Msg -> Player -> (Int, Int) -> ( Player, Cmd Msg )
 update msg player (w, h) =
     -- use the key up and down to basically simulate the old wasd
@@ -55,16 +60,61 @@ update msg player (w, h) =
     case msg of
         KeyDown code ->
             let
+                arws = player.arrows
+                arrows =
+                    if code == up then
+                        { arws | y = arws.y + 1 }
+                    else if code == down then
+                        { arws | y = arws.y - 1 }
+                    else if code == left then
+                        { arws | x = arws.x - 1 }
+                    else if code == right then
+                        { arws | x = arws.x + 1 }
+                    else
+                        arws
+
                 c = log "down: " code
             in
-                (player, Cmd.none)
+                ({player | arrows = arrows}, Cmd.none)
         KeyUp code ->
             let
-                c = log "up: " code
+                arws = player.arrows
+                arrows =
+                    if code == up then
+                        { arws | y = arws.y - 1 }
+                    else if code == down then
+                        { arws | y = arws.y + 1 }
+                    else if code == left then
+                        { arws | x = arws.x + 1 }
+                    else if code == right then
+                        { arws | x = arws.x - 1 }
+                    else
+                        arws
+
+                c = log "down: " code
             in
-                (player, Cmd.none)
+                ({player | arrows = arrows}, Cmd.none)
         Tick t ->
-            (player, Cmd.none)
+            let
+                wasd = player.arrows
+                (xf, yf) = (toFloat wasd.x, toFloat wasd.y)
+                speed = currentSpeed player yf
+                angle = player.angle + (xf * rotationSpeed |> negate)
+                movingAngle = currentAngle player yf angle
+                (x, y) = (newPosition speed (degrees movingAngle))
+                px = constrain player.x w
+                py = constrain player.y h
+
+                updatedPlayer =
+                    { player |
+                        angle = angle
+                        , x = px + x
+                        , y = py + y
+                        , speed = speed
+                        , movingAngle = movingAngle
+                        }
+            in
+                ( (log "this should not be happening: " updatedPlayer), Cmd.none )
 
         Move wasd ->
             let

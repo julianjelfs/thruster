@@ -10,11 +10,12 @@ type alias Player =
     , team: String
     , speed: Float
     , movingAngle: Float
+    , arrows: {x:Int, y:Int}
     }
 
 
 nullPlayer =
-    Player 0 0 0 False "" "" "" 0 0
+    Player 0 0 0 False "" "" "" 0 0 { x = 0, y = 0 }
 
 type alias Asteroid =
     { x: Float
