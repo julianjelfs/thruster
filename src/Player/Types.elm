@@ -8,5 +8,4 @@ type Msg =
     KeyDown KeyCode
     | KeyUp KeyCode
     | Tick Time.Time
-    | Move { x: Int, y: Int }
 
