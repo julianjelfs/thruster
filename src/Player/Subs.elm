@@ -13,10 +13,6 @@ eventLoop =
     diffs Player.Types.Tick
         |> Sub.map PlayerMsg
 
-windowResize: Sub Msg
-windowResize =
-   resizes (\s -> ScreenSizeChanged (s.width, s.height))
-
 keyDown: Sub Msg
 keyDown =
     downs Player.Types.KeyDown

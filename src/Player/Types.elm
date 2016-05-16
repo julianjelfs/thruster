@@ -1,6 +1,5 @@
 module Player.Types exposing(..)
 
-import Messages exposing (..)
 import Time
 import Keyboard exposing (KeyCode)
 

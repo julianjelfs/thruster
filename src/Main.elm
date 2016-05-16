@@ -6,21 +6,13 @@ import State exposing (update)
 import Task
 import Window
 import Html.App as Html
-import Messages exposing (..)
 import Debug exposing (log)
 import Player.Subs exposing (..)
-import Ports exposing (inboundSocket)
 
 -- START APP
 init : ( Model, Cmd Msg )
 init =
-  ( initialModel, initialWindowSize )
-
-initialWindowSize : Cmd Msg
-initialWindowSize =
-    Window.size
-        |> Task.map (\s -> (s.width, s.height))
-        |> Task.perform TaskDone ScreenSizeChanged
+  ( initialModel, Cmd.none )
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
@@ -28,8 +20,6 @@ subscriptions model =
     Sub.batch [ keyDown
               , keyUp
               , eventLoop
-              , windowResize
-              , (inboundSocket InboundMessage)
               ]
 
 main =

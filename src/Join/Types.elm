@@ -1,12 +1,7 @@
 module Join.Types exposing(..)
 
-import Messages exposing (..)
-
 type Msg =
-    TaskDone ()
-    | JoinGame String String
-    | UpdateName String
-    | UpdateTeam String
+    JoinGame String String
 
 type alias Model =
   { name: String
