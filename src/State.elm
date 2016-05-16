@@ -62,6 +62,6 @@ update msg model =
         JoinMsg sub ->
             let
                 (updated, fx) =
-                    Join.State.update sub model.join
+                    Join.State.update (log "sub: " sub) model.join
             in
                 ( { model | join = updated }, Cmd.map JoinMsg fx )

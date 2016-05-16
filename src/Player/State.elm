@@ -69,7 +69,7 @@ update msg player (w, h) =
     case msg of
         KeyDown code ->
             let
-                arrows = updateArrows player.arrows (log "down: " code) 1
+                arrows = updateArrows player.arrows code 1
             in
                 ({player | arrows = arrows}, Cmd.none)
         KeyUp code ->

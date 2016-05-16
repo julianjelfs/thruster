@@ -20,12 +20,16 @@ const messageTypes = {
 }
 */
 const app = Elm.Main.fullscreen()
+let joined = false
 
 app.ports.outboundSocket.subscribe(msg => {
     switch (msg.messageType) {
         case messageTypes.join: 
             console.log('we got a join message: ' + JSON.stringify(msg.payload))
-            startGame(msg.payload)
+            if(!joined) {
+                startGame(msg.payload)
+                joined = true
+            }
             break;
         case messageTypes.update: 
             if(socket) {

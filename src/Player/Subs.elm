@@ -6,10 +6,11 @@ import Types exposing (..)
 import Time exposing (every, millisecond, second)
 import Window exposing (resizes)
 import Keyboard exposing (downs, ups)
+import AnimationFrame exposing (diffs)
 
 eventLoop: Sub Msg
 eventLoop =
-    every (millisecond * 16) Player.Types.Tick
+    diffs Player.Types.Tick
         |> Sub.map PlayerMsg
 
 windowResize: Sub Msg
