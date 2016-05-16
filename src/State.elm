@@ -7,7 +7,7 @@ import Agents exposing (Player, nullPlayer)
 import Debug exposing (log)
 import Messages exposing (messageTypes, welcomeMessage, deltaMessage, updateMessage)
 import Ports exposing (outboundSocket)
-import Debug exposing (log)
+import Debug exposing (log, crash)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -62,6 +62,12 @@ update msg model =
         JoinMsg sub ->
             let
                 (updated, fx) =
-                    Join.State.update (log "sub: " sub) model.join
+                    --some bug is causing this to fire after we have joined
+                    --with sub set to a keycode. All I can do is ignore it and
+                    --hopefully it will get fixed. 
+                    if model.joined then
+                        ( model.join, Cmd.none )
+                    else
+                        Join.State.update (log "sub: " sub) model.join
             in
                 ( { model | join = updated }, Cmd.map JoinMsg fx )
