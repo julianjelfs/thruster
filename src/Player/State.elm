@@ -54,13 +54,13 @@ right = 39
 
 updateArrows arrows code inc =
     if code == up then
-        { arrows | y = arrows.y + inc }
+        { arrows | y = clamp -1 1 (arrows.y + inc) }
     else if code == down then
-        { arrows | y = arrows.y - inc }
+        { arrows | y = clamp -1 1 (arrows.y - inc) }
     else if code == left then
-        { arrows | x = arrows.x - inc }
+        { arrows | x = clamp -1 1 (arrows.x - inc) }
     else if code == right then
-        { arrows | x = arrows.x + inc }
+        { arrows | x = clamp -1 1 (arrows.x + inc) }
     else
         arrows
 
@@ -69,7 +69,7 @@ update msg player (w, h) =
     case msg of
         KeyDown code ->
             let
-                arrows = updateArrows player.arrows code 1
+                arrows = updateArrows player.arrows (log "down: " code) 1
             in
                 ({player | arrows = arrows}, Cmd.none)
         KeyUp code ->
