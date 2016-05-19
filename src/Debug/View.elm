@@ -15,6 +15,7 @@ root player =
                 , div [] [ text ("a: " ++ (toString p.angle)) ]
                 , div [] [ text ("arrows: " ++ (toString p.arrows)) ]
                 , div [] [ text ("thrusting: " ++ (toString p.thrusting)) ]
+                , div [] [ text ("power: " ++ (toString p.power)) ]
                 ]
         Nothing ->
             div [] []

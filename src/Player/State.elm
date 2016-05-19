@@ -97,6 +97,18 @@ update msg player (w, h) =
                 (x, y) = (newPosition speed (degrees movingAngle))
                 px = constrain player.x w
                 py = constrain player.y h
+                power =
+                    clamp 0 100
+                        (if player.thrusting then
+                            player.power - 1
+                        else
+                            player.power + 1)
+
+                thrusting =
+                    if power > 0 then
+                        player.thrusting
+                    else
+                        False
 
                 updatedPlayer =
                     { player |
@@ -105,6 +117,8 @@ update msg player (w, h) =
                         , y = py + y
                         , speed = speed
                         , movingAngle = movingAngle
+                        , power = power
+                        , thrusting = thrusting
                         }
             in
                 ( updatedPlayer, Cmd.none )
