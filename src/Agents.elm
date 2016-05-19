@@ -11,11 +11,11 @@ type alias Player =
     , speed: Float
     , movingAngle: Float
     , arrows: {x:Int, y:Int}
+    , power: Float
     }
 
-
 nullPlayer =
-    Player 0 0 0 False "" "" "" 0 0 { x = 0, y = 0 }
+    Player 0 0 0 False "" "" "" 0 0 { x = 0, y = 0 } 100
 
 type alias Asteroid =
     { x: Float

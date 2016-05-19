@@ -40,7 +40,7 @@ type alias Message =
 
 
 playerCtr a b c d e f g =
-    Player a b c d e f g 0 0 {x=0,y=0}
+    Player a b c d e f g 0 0 {x=0,y=0} 100
 
 playerDecoder =
     Decode.object7
