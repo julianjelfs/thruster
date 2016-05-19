@@ -7,7 +7,7 @@ import List exposing (map)
 import Debug exposing (log)
 
 grad =
-    linear (0,0) (40,40) [(0, blue), (1, green)]
+    linear (0,0) (100,300) [(1, yellow), (0, yellow)]
 
 teamColour p =
     if p.team == "Green" then
@@ -16,6 +16,13 @@ teamColour p =
         blue
     else
         yellow
+
+
+thrustCone =
+    polygon [ (-50,0)
+            , (600,150)
+            , (600,-150) ]
+
 
 rocket =
     polygon ([ (-20,0)
@@ -33,12 +40,24 @@ rocket =
             , (-8,-5)
             ] |> List.map (\(x,y) -> ((x-5)*2, y*2)))
 
+filledRocket tc =
+    rocket |> filled tc
+
+filledCone =
+    thrustCone
+        |> filled yellow
+        |> alpha 0.2
+
 player p =
     let
         tc = teamColour p
+        completeRocket =
+            if p.thrusting then
+                group [ filledCone, filledRocket tc ]
+            else
+                filledRocket tc
     in
-        rocket
-            |> filled tc
+        completeRocket
             |> move (p.x, p.y)
             |> rotate (degrees p.angle)
 
