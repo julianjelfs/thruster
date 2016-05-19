@@ -51,6 +51,7 @@ up = 38
 down = 40
 left = 37
 right = 39
+space = 32
 
 updateArrows arrows code inc =
     if code == up then
@@ -64,19 +65,28 @@ updateArrows arrows code inc =
     else
         arrows
 
+updateThrust player on code =
+    if code == space then
+        on
+    else
+        player.thrusting
+
+
 update : Msg -> Player -> (Int, Int) -> ( Player, Cmd Msg )
 update msg player (w, h) =
     case msg of
         KeyDown code ->
             let
                 arrows = updateArrows player.arrows code 1
+                thrusting = updateThrust player True code
             in
-                ({player | arrows = arrows}, Cmd.none)
+                ({player | arrows = arrows, thrusting = thrusting}, Cmd.none)
         KeyUp code ->
             let
                 arrows = updateArrows player.arrows code -1
+                thrusting = updateThrust player False code
             in
-                ({player | arrows = arrows}, Cmd.none)
+                ({player | arrows = arrows, thrusting = thrusting}, Cmd.none)
         Tick t ->
             let
                 wasd = player.arrows
