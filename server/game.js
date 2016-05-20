@@ -80,11 +80,60 @@ function topUpAsteroids(asteroids){
     return asteroids
 }
 
+function thrustingPlayers(players) {
+    return Object.keys(players)
+        .filter(k => players[k].thrusting)
+        .map(k => players[k])
+}
+
+function distance(p, a) {
+    const dx = p.x - a.x
+    const dy = p.y - a.y
+    return Math.sqrt( dx*dx + dy*dy );
+}
+
+function angleRadians(p1, p2) {
+    return Math.atan2(p2.y - p1.y, p2.x - p1.x)
+}
+
+function angleDegrees(p1, p2) {
+    return Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI
+}
+
+function moveAsteroids(asteroids) {
+    
+    Object.keys(asteroids).forEach(k => {
+        asteroids[k].c = '#ff0000'
+    })
+    
+    const thrusting = thrustingPlayers(players)
+    if(thrusting.length === 0) {
+        return asteroids
+    }
+    
+    thrusting.forEach(t => {
+        Object.keys(asteroids).forEach(k => {
+            const a = asteroids[k]
+            
+            const d = distance(t, a)
+            const a1 = angleDegrees(t, a)
+            const a2 = a1 - t.angle
+            const a3 = Math.abs(a2)
+            
+            if(d < 650 && a3 < 20) {
+                a.c = '#00FF00'
+            } 
+        })
+    })
+    
+    return asteroids
+}
+
 function delta() {
     //this is where we work out what has changed since the last time we checked
     //and apply all the moving logic 
     //replenish asteroids
-    asteroids = topUpAsteroids(asteroids)
+    asteroids = moveAsteroids(topUpAsteroids(asteroids))
     return {
         players: Object.values(players),
         asteroids: Object.values(asteroids)
@@ -93,7 +142,7 @@ function delta() {
 
 function createAnAsteroid() {
     return Object.assign({
-        c: randomColour(),
+        c: '#ff0000',
         id: ++nextId,
         r: randomAsteroidSize(),
         a: randomAngle()

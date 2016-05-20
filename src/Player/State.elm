@@ -71,6 +71,15 @@ updateThrust player on code =
     else
         player.thrusting
 
+constrainAngle a =
+    if a < -180 then
+        360 + a
+    else
+        if a > 180 then
+            a - 360
+        else
+            a
+
 
 update : Msg -> Player -> (Int, Int) -> ( Player, Cmd Msg )
 update msg player (w, h) =
@@ -92,7 +101,7 @@ update msg player (w, h) =
                 wasd = player.arrows
                 (xf, yf) = (toFloat wasd.x, toFloat wasd.y)
                 speed = currentSpeed player yf
-                angle = player.angle + (xf * rotationSpeed |> negate)
+                angle = player.angle + (xf * rotationSpeed |> negate) |> constrainAngle
                 movingAngle = currentAngle player yf angle
                 (x, y) = (newPosition speed (degrees movingAngle))
                 px = constrain player.x w
