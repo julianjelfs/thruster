@@ -24,4 +24,6 @@ type alias Asteroid =
     , id: Int
     , radius: Float
     , angle: Float
+    , aa: Float
+    , ra: Float
     }

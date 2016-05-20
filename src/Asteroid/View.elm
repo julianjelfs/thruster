@@ -4,6 +4,7 @@ import Color exposing (..)
 import Color.Convert exposing (hexToColor)
 import Collage exposing (..)
 import Element exposing (..)
+import Text exposing (..)
 import List exposing (map)
 
 line =
@@ -19,6 +20,12 @@ asteroidColour a =
     (Maybe.withDefault (rgba 255 14 93 0.5) (hexToColor a.colour))
 
 asteroid a =
+    let
+        t = fromString ((toString a.aa) ++ "," ++ (toString a.ra))
+            |> centered
+            |> toForm
+            |> move (a.x, a.y)
+    in
     ngon 6 a.radius
         |> filled (asteroidColour a)
         |> alpha 0.5

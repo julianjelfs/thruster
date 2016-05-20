@@ -54,7 +54,7 @@ playerDecoder =
         ("team" := Decode.string)
 
 asteroidDecoder =
-    Decode.object6
+    Decode.object8
         Asteroid
         ("x" := Decode.float)
         ("y" := Decode.float)
@@ -62,6 +62,8 @@ asteroidDecoder =
         ("id" := Decode.int)
         ("r" := Decode.float)
         ("a" := Decode.float)
+        ("aa" := Decode.float)
+        ("ra" := Decode.float)
 
 welcomeMessage: Message -> Maybe WelcomeMessage
 welcomeMessage msg =

@@ -100,6 +100,18 @@ function angleDegrees(p1, p2) {
     return Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI
 }
 
+function constrainAngle(a) {
+    if(a < -180) {
+        return 360 + a
+    } else {
+        if (a > 180){
+            return a - 360
+        } else {
+            return a
+        }
+    }
+}
+
 function moveAsteroids(asteroids) {
     
     Object.keys(asteroids).forEach(k => {
@@ -118,11 +130,13 @@ function moveAsteroids(asteroids) {
             const d = distance(t, a)
             const a1 = angleDegrees(t, a)
             const a2 = a1 - t.angle
-            const a3 = Math.abs(a2)
+            const a3 = Math.abs(constrainAngle(a2))
             
             if(d < 650 && a3 < 20) {
                 a.c = '#00FF00'
             } 
+            a.aa = Math.round(a1)
+            a.ra = Math.round(a2)
         })
     })
     
@@ -145,7 +159,9 @@ function createAnAsteroid() {
         c: '#ff0000',
         id: ++nextId,
         r: randomAsteroidSize(),
-        a: randomAngle()
+        a: randomAngle(),
+        aa: 0,
+        ra: 0
     }, randomPosition())
 }
 
