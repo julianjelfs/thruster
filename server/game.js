@@ -5,10 +5,11 @@
 
 const config = {
     dimensions: [1000, 1000],
-    numAsteroids: 50,
+    numAsteroids: 20,
     thrustAngle: 60,
     startAngle: 0,
-    updatesPerSecond: 20
+    updatesPerSecond: 20,
+    thrustSpeed : 5
 }
 
 let asteroids = {},
@@ -112,6 +113,19 @@ function constrainAngle(a) {
     }
 }
 
+function constrainPosition(dim, limit) {
+    return dim
+    const upperLimit = limit / 2,
+        lowerLimit = upperLimit * -1
+    if(dim > upperLimit) {
+        return lowerLimit
+    } else if(dim < lowerLimit) {
+        return upperLimit
+    } else {
+        return dim
+    }
+}
+    
 function moveAsteroids(asteroids) {
     
     Object.keys(asteroids).forEach(k => {
@@ -134,6 +148,10 @@ function moveAsteroids(asteroids) {
             
             if(d < 650 && a3 < 20) {
                 a.c = '#00FF00'
+                //push the asteroid in angle a1 
+                const dPos = newPosition(a1*-1)
+                a.x = constrainPosition(a.x + dPos.x, config.dimensions[0])
+                a.y = constrainPosition(a.y + dPos.y, config.dimensions[1])
             } 
             a.aa = Math.round(a1)
             a.ra = Math.round(a2)
@@ -141,6 +159,13 @@ function moveAsteroids(asteroids) {
     })
     
     return asteroids
+}
+
+function newPosition(angle) {
+    return {
+        x: config.thrustSpeed * Math.cos(angle),
+        y: config.thrustSpeed * Math.sin(angle)
+    }
 }
 
 function delta() {

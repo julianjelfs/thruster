@@ -26,11 +26,13 @@ asteroid a =
             |> toForm
             |> move (a.x, a.y)
     in
+    --group [ t ,
     ngon 6 a.radius
         |> filled (asteroidColour a)
         |> alpha 0.5
         |> move (a.x, a.y)
         |> rotate (degrees a.angle)
+        --]
 
 root asteroids (w, h) =
     asteroids

@@ -19,7 +19,7 @@ teamColour p =
 
 
 thrustCone =
-    polygon [ (-50,0)
+    polygon [ (0,0)
             , (600,150)
             , (600,-150) ]
 
@@ -38,7 +38,7 @@ rocket =
             , (6,-11)
             , (-12,-11)
             , (-8,-5)
-            ] |> List.map (\(x,y) -> ((x-5)*2, y*2)))
+            ] |> List.map (\(x,y) -> ((x-5), y)))
 
 filledRocket tc =
     rocket |> filled tc
