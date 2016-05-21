@@ -31,7 +31,6 @@ asteroid a =
         |> filled (asteroidColour a)
         |> alpha 0.5
         |> move (a.x, a.y)
-        |> rotate (degrees a.angle)
         --]
 
 root asteroids (w, h) =

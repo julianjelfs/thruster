@@ -5,11 +5,12 @@
 
 const config = {
     dimensions: [1000, 1000],
-    numAsteroids: 20,
-    thrustAngle: 60,
+    numAsteroids: 40,
+    thrustAngle: 20,
     startAngle: 0,
     updatesPerSecond: 20,
-    thrustSpeed : 5
+    thrustSpeed : 100,
+    thrustRange : 650
 }
 
 let asteroids = {},
@@ -25,7 +26,7 @@ function randomAngle() {
 }
 
 function randomAsteroidSize() {
-    return randomNum(10, 25)
+    return randomNum(5, 15)
 }
 
 function randomPosition(){
@@ -114,7 +115,6 @@ function constrainAngle(a) {
 }
 
 function constrainPosition(dim, limit) {
-    return dim
     const upperLimit = limit / 2,
         lowerLimit = upperLimit * -1
     if(dim > upperLimit) {
@@ -125,54 +125,66 @@ function constrainPosition(dim, limit) {
         return dim
     }
 }
+
+function mergeVector(v1, v2) {
+    return v1 ? {
+        x: (v1.x + v2.x) / 2,
+        y: (v1.y + v2.y) / 2
+    } : v2
+}
     
 function moveAsteroids(asteroids) {
     
-    Object.keys(asteroids).forEach(k => {
-        asteroids[k].c = '#ff0000'
-    })
-    
-    const thrusting = thrustingPlayers(players)
-    if(thrusting.length === 0) {
-        return asteroids
-    }
-    
-    thrusting.forEach(t => {
+    thrustingPlayers(players).forEach(t => {
         Object.keys(asteroids).forEach(k => {
             const a = asteroids[k]
-            
+
+            a.c = '#ff0000'
             const d = distance(t, a)
             const a1 = angleDegrees(t, a)
             const a2 = a1 - t.angle
             const a3 = Math.abs(constrainAngle(a2))
             
-            if(d < 650 && a3 < 20) {
+            if(d < config.thrustRange && a3 < config.thrustAngle) {
                 a.c = '#00FF00'
-                //push the asteroid in angle a1 
-                const dPos = newPosition(a1*-1)
-                a.x = constrainPosition(a.x + dPos.x, config.dimensions[0])
-                a.y = constrainPosition(a.y + dPos.y, config.dimensions[1])
+                a.v = mergeVector(a.v, newVector(a1 * -1))
+                a.s = config.thrustSpeed / a.r
             } 
             a.aa = Math.round(a1)
             a.ra = Math.round(a2)
         })
     })
+
+    Object.keys(asteroids).forEach(k => {
+        const a = asteroids[k]
+        if(Math.abs(a.s) > 0.1) {
+            a.x += (a.s * a.v.x)
+            a.y += (a.s * a.v.y)
+            a.x = constrainPosition(a.x, config.dimensions[0])
+            a.y = constrainPosition(a.y, config.dimensions[1])
+            a.s *= 0.8
+            a.c = '#00FF00'
+        }
+    })
     
     return asteroids
 }
 
-function newPosition(angle) {
+function newVector(angle) {
     return {
-        x: config.thrustSpeed * Math.cos(angle),
-        y: config.thrustSpeed * Math.sin(angle)
+        x: Math.cos(angle),
+        y: Math.sin(angle)
     }
 }
 
 function delta() {
-    //this is where we work out what has changed since the last time we checked
-    //and apply all the moving logic 
-    //replenish asteroids
+    const start = new Date()
     asteroids = moveAsteroids(topUpAsteroids(asteroids))
+    const end = new Date()
+    const time = end.getTime() - start.getTime()
+    if(time > 20) {
+        console.log(`loop took: ${time} ms, might have a performance problem`)
+    }
     return {
         players: Object.values(players),
         asteroids: Object.values(asteroids)
@@ -184,9 +196,10 @@ function createAnAsteroid() {
         c: '#ff0000',
         id: ++nextId,
         r: randomAsteroidSize(),
-        a: randomAngle(),
         aa: 0,
-        ra: 0
+        ra: 0,
+        s: 0,
+        v: null
     }, randomPosition())
 }
 
