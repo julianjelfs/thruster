@@ -5,11 +5,11 @@
 
 const config = {
     dimensions: [1000, 1000],
-    numAsteroids: 40,
+    numAsteroids: 1,
     thrustAngle: 20,
     startAngle: 0,
     updatesPerSecond: 20,
-    thrustSpeed : 100,
+    thrustSpeed : 80,
     thrustRange : 650
 }
 
@@ -162,7 +162,7 @@ function moveAsteroids(asteroids) {
             a.y += (a.s * a.v.y)
             a.x = constrainPosition(a.x, config.dimensions[0])
             a.y = constrainPosition(a.y, config.dimensions[1])
-            a.s *= 0.8
+            a.s *= 0.99
             a.c = '#00FF00'
         }
     })
