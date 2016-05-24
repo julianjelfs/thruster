@@ -138,18 +138,6 @@ function moveAsteroids(asteroids) {
     thrustingPlayers(players).forEach(t => {
         Object.keys(asteroids).forEach(k => {
             const a = asteroids[k]
-            
-            if(score(config.greenGoal, a)) {
-                scores.green += 1
-                delete asteroids[k]
-                return
-            }
-            if(score(config.blueGoal, a)) {
-                scores.blue += 1
-                delete asteroids[k]
-                return
-            }
-
             const d = distance(t, a)
             const a1 = angleDegrees(t, a)
             const a2 = a1 - t.angle
@@ -172,6 +160,15 @@ function moveAsteroids(asteroids) {
             a.x = constrainPosition(a.x, config.dimensions[0])
             a.y = constrainPosition(a.y, config.dimensions[1])
             a.s *= 0.9
+        }
+        if(score(config.greenGoal, a)) {
+            scores.green += a.r
+            delete asteroids[k]
+        } else {
+            if (score(config.blueGoal, a)) {
+                scores.blue += a.r
+                delete asteroids[k]
+            }
         }
     })
     
