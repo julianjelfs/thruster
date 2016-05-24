@@ -98,18 +98,6 @@ function angleDegrees(p1, p2) {
     return Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI
 }
 
-function constrainAngle(a) {
-    if(a < -180) {
-        return 360 + a
-    } else {
-        if (a > 180){
-            return a - 360
-        } else {
-            return a
-        }
-    }
-}
-
 function constrainPosition(dim, limit) {
     const upperLimit = limit / 2,
         lowerLimit = upperLimit * -1
@@ -141,7 +129,7 @@ function moveAsteroids(asteroids) {
             const d = distance(t, a)
             const a1 = angleDegrees(t, a)
             const a2 = a1 - t.angle
-            const a3 = Math.abs(constrainAngle(a2))
+            const a3 = Math.abs(Math.abs(a1) - Math.abs(t.angle))
             
             if(d < config.thrustRange && a3 < config.thrustAngle) {
                 a.v = mergeVector(a.v, newVector(a1 * -1))

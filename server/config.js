@@ -1,6 +1,6 @@
 const config = {
     dimensions: [1000, 1000],
-    numAsteroids: 30,
+    numAsteroids: 1,
     thrustAngle: 20,
     startAngle: 0,
     updatesPerSecond: 20,
