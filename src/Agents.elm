@@ -14,6 +14,11 @@ type alias Player =
     , power: Float
     }
 
+type alias Score =
+    { blue: Int
+    , green: Int
+    }
+
 nullPlayer =
     Player 0 0 0 False "" "" "" 0 0 { x = 0, y = 0 } 100
 

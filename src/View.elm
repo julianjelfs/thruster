@@ -11,20 +11,24 @@ import Element exposing (..)
 import Starfield.View as Starfield
 import Asteroid.View as Asteroid
 import Player.View as Player
+import Goal.View as Goal
 import Hud.View as Hud
 import Agents exposing (Player, nullPlayer)
 import List
 import Debug.View
 
-canvas {joinedAt, asteroids, players, me} dim =
+canvas {joinedAt, asteroids, players, me, score} dim =
     let
         (w, h) = dim
+        goals =
+            [ Goal.root score.blue "BLUE" blue (-400,400)
+            , Goal.root score.green "GREEN" green (400,-400) ]
         stars = Starfield.root joinedAt dim
         asts = Asteroid.root asteroids dim
         definitelyMe = (Maybe.withDefault nullPlayer me)
         plyr = Player.root [definitelyMe] dim
         notMe = List.filter (\p -> p.id /= definitelyMe.id) players
-        agents = List.concat [stars, asts, plyr, (Player.root notMe dim), [(Hud.root definitelyMe dim)]]
+        agents = List.concat [stars, asts, plyr, (Player.root notMe dim), [(Hud.root definitelyMe dim)], goals]
     in
         collage w h agents
             |> toHtml

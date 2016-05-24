@@ -22,6 +22,7 @@ type alias Model =
     , me: Maybe Player
     , players: List Player
     , asteroids: List Asteroid
+    , score: Score
     }
 
 initialModel : Model
@@ -33,4 +34,5 @@ initialModel =
     , me = Nothing
     , players = []
     , asteroids = []
+    , score = Score 0 0
     }

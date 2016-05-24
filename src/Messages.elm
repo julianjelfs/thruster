@@ -27,6 +27,7 @@ type alias WelcomeMessage =
 type alias DeltaMessage =
     { players: List Player
     , asteroids: List Asteroid
+    , score: Score
     }
 
 messageTypes: MessageTypes
@@ -90,10 +91,15 @@ deltaMessage msg =
         let
             result =
                 Decode.decodeValue
-                    (Decode.object2
+                    (Decode.object3
                         DeltaMessage
                         ("players" := Decode.list playerDecoder)
-                        ("asteroids" := Decode.list asteroidDecoder))
+                        ("asteroids" := Decode.list asteroidDecoder)
+                        ("scores" :=
+                        (Decode.object2
+                            Score
+                            ("blue" := Decode.int)
+                            ("green" := Decode.int))))
                     msg.payload
         in
             case result of

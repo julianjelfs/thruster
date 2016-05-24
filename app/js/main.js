@@ -1,6 +1,7 @@
 // IMPORT ASSETS
 import '../css/App.scss'
 import io from 'socket.io-client'
+import config from '../../server/config'
 
 import Elm from '../../src/Main.elm'
 
@@ -11,21 +12,13 @@ const messageTypes = {
     update: 3,
     delta: 4
 }
-/*
-{
-    inboundSocket: {
-        messageType: 0,
-        payload: null
-    }
-}
-*/
+
 const app = Elm.Main.fullscreen()
 let joined = false
 
 app.ports.outboundSocket.subscribe(msg => {
     switch (msg.messageType) {
         case messageTypes.join: 
-            console.log('we got a join message: ' + JSON.stringify(msg.payload))
             if(!joined) {
                 startGame(msg.payload)
                 joined = true
@@ -61,7 +54,6 @@ function setupSocket(sock) {
 
     // Handle connection.
     sock.on('welcome', (s) => {
-        console.log('we got a welcome message' + JSON.stringify(Object.assign(s, {timestamp:+new Date()})))
         app.ports.inboundSocket.send({
             messageType: messageTypes.welcome,
             payload: Object.assign(s, {timestamp:+new Date()})

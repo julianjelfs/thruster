@@ -3,18 +3,14 @@
  * @type {{start: module.exports.start, addPlayer: module.exports.addPlayer}}
  */
 
-const config = {
-    dimensions: [1000, 1000],
-    numAsteroids: 1,
-    thrustAngle: 20,
-    startAngle: 0,
-    updatesPerSecond: 20,
-    thrustSpeed : 80,
-    thrustRange : 650
-}
+import config from './config'
 
 let asteroids = {},
     players = {},
+    scores = {
+        green: 0,
+        blue: 0
+    },
     nextId = 0
 
 function randomNum(min,max) {
@@ -132,21 +128,34 @@ function mergeVector(v1, v2) {
         y: (v1.y + v2.y) / 2
     } : v2
 }
+
+function score(goal, asteroid) {
+    return distance(goal, asteroid) < config.goalSize
+}
     
 function moveAsteroids(asteroids) {
     
     thrustingPlayers(players).forEach(t => {
         Object.keys(asteroids).forEach(k => {
             const a = asteroids[k]
+            
+            if(score(config.greenGoal, a)) {
+                scores.green += 1
+                delete asteroids[k]
+                return
+            }
+            if(score(config.blueGoal, a)) {
+                scores.blue += 1
+                delete asteroids[k]
+                return
+            }
 
-            a.c = '#ff0000'
             const d = distance(t, a)
             const a1 = angleDegrees(t, a)
             const a2 = a1 - t.angle
             const a3 = Math.abs(constrainAngle(a2))
             
             if(d < config.thrustRange && a3 < config.thrustAngle) {
-                a.c = '#00FF00'
                 a.v = mergeVector(a.v, newVector(a1 * -1))
                 a.s = config.thrustSpeed / a.r
             } 
@@ -162,8 +171,7 @@ function moveAsteroids(asteroids) {
             a.y += (a.s * a.v.y)
             a.x = constrainPosition(a.x, config.dimensions[0])
             a.y = constrainPosition(a.y, config.dimensions[1])
-            a.s *= 0.99
-            a.c = '#00FF00'
+            a.s *= 0.9
         }
     })
     
@@ -187,7 +195,8 @@ function delta() {
     }
     return {
         players: Object.values(players),
-        asteroids: Object.values(asteroids)
+        asteroids: Object.values(asteroids),
+        scores: scores
     }
 }
 

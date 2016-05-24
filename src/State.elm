@@ -43,7 +43,8 @@ update msg model =
                     case maybeDelta of
                         Just d ->
                             ( { model | players = d.players
-                                , asteroids = d.asteroids }, Cmd.none)
+                                , asteroids = d.asteroids
+                                , score = d.score }, Cmd.none)
                         Nothing ->
                             ( model, Cmd.none )
             else

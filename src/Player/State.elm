@@ -6,7 +6,7 @@ import Messages exposing (..)
 import Debug exposing (log)
 
 tolerance = 0.5
-rotationSpeed = 10
+rotationSpeed = 8
 
 newPosition speed angle =
     let
@@ -33,9 +33,9 @@ constrain dim limit =
 currentSpeed {speed} yf =
     if yf /= 0 then
         if yf < 0 then
-            -15
+            -8
         else
-            15
+            8
     else if (abs speed) > tolerance then
         speed * 0.95
     else
