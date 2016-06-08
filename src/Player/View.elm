@@ -5,6 +5,8 @@ import Collage exposing (..)
 import Element exposing (..)
 import List exposing (map)
 import Debug exposing (log)
+import Text exposing (..)
+import String exposing (..)
 
 grad =
     linear (0,0) (100,300) [(1, yellow), (0, yellow)]
@@ -17,12 +19,10 @@ teamColour p =
     else
         yellow
 
-
 thrustCone =
     polygon [ (0,0)
             , (600,150)
             , (600,-150) ]
-
 
 rocket =
     polygon ([ (-20,0)
@@ -50,6 +50,10 @@ filledCone =
 
 player p =
     let
+        name = fromString (p.name |> (String.left 1) |> String.toUpper)
+            |> centered
+            |> toForm
+
         tc = teamColour p
         completeRocket =
             if p.thrusting then
@@ -57,7 +61,7 @@ player p =
             else
                 filledRocket tc
     in
-        completeRocket
+        group [ completeRocket, name ]
             |> move (p.x, p.y)
             |> rotate (degrees p.angle)
 

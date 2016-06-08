@@ -98,15 +98,24 @@ function angleDegrees(p1, p2) {
     return Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI
 }
 
-function constrainPosition(dim, limit) {
+function degreesToRadians(degrees) {
+    return degrees * Math.PI / 180
+}
+
+function outOfBounds(asteroid, dimensions) {
+    return beyondLimit(asteroid.x, dimensions[0])
+        || beyondLimit(asteroid.y, dimensions[1])
+}
+
+function beyondLimit(dim, limit) {
     const upperLimit = limit / 2,
         lowerLimit = upperLimit * -1
     if(dim > upperLimit) {
-        return lowerLimit
+        return true
     } else if(dim < lowerLimit) {
-        return upperLimit
+        return true
     } else {
-        return dim
+        return false
     }
 }
 
@@ -118,7 +127,7 @@ function mergeVector(v1, v2) {
 }
 
 function score(goal, asteroid) {
-    return distance(goal, asteroid) < config.goalSize
+    return distance(goal, asteroid) < config.goalSize - 40
 }
     
 function moveAsteroids(asteroids) {
@@ -128,35 +137,34 @@ function moveAsteroids(asteroids) {
             const a = asteroids[k]
             const d = distance(t, a)
             const a1 = angleDegrees(t, a)
-            const a2 = a1 - t.angle
             const a3 = Math.abs(Math.abs(a1) - Math.abs(t.angle))
             
             if(d < config.thrustRange && a3 < config.thrustAngle) {
-                a.v = mergeVector(a.v, newVector(a1 * -1))
+                a.v = mergeVector(a.v, newVector(a1))
                 a.s = config.thrustSpeed / a.r
             } 
             a.aa = Math.round(a1)
-            a.ra = Math.round(a2)
         })
     })
 
     Object.keys(asteroids).forEach(k => {
         const a = asteroids[k]
-        if(Math.abs(a.s) > 0.1) {
+        if(Math.abs(a.s) > 0.05) {
             a.x += (a.s * a.v.x)
             a.y += (a.s * a.v.y)
-            a.x = constrainPosition(a.x, config.dimensions[0])
-            a.y = constrainPosition(a.y, config.dimensions[1])
             a.s *= 0.9
+        } else {
+            a.s = 0
+            delete a.v
         }
-        if(score(config.greenGoal, a)) {
+        if(outOfBounds(a, config.dimensions)) {
+            delete asteroids[k]
+        } else if(score(config.greenGoal, a)) {
             scores.green += a.r
             delete asteroids[k]
-        } else {
-            if (score(config.blueGoal, a)) {
-                scores.blue += a.r
-                delete asteroids[k]
-            }
+        } else if (score(config.blueGoal, a)) {
+            scores.blue += a.r
+            delete asteroids[k]
         }
     })
     
@@ -164,9 +172,10 @@ function moveAsteroids(asteroids) {
 }
 
 function newVector(angle) {
+    const a = degreesToRadians(angle)
     return {
-        x: Math.cos(angle),
-        y: Math.sin(angle)
+        x: Math.cos(a),
+        y: Math.sin(a)
     }
 }
 

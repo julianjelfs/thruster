@@ -109,7 +109,7 @@ update msg player (w, h) =
                 power =
                     clamp 0 100
                         (if player.thrusting then
-                            player.power - 1
+                            player.power - 0.5
                         else
                             player.power + 1)
 
