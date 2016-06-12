@@ -3,22 +3,24 @@
 ### (previously known as One or more persons and their respective blobs)
 
 A multi-player game using Elm and node js
+ 
+![Image](screenshot.png)
 
 ---
 
 ## How to Play
 
 #### Game Controls
-- Use WS or up and down arrows to move forward anf backwards in the direction you are pointing
-- Use AD or left and right arrows to rotate left and right
+- Use up and down arrows to move forward and backwards in the direction you are pointing
+- Use left and right arrows to rotate left and right
 - Use spacebar to fire your thruster
 
 #### Gameplay Rules
 - Join a team (there must be at least one player on each of the two teams)
 - The aim of the game is to herd as many asteroids into your target black hole as possible
 - To move asteroids, fire your thrust cannon at them
-- Sabotage players on the other team by thrusting them off course or stealing their asteroids
-- If you get sucked into either black hole, you are dead
+- Sabotage players on the other team by thrusting them off course or stealing their asteroids (TODO)
+- If you get sucked into either black hole, you are dead (TODO)
 - Thrust cannons are limited and need to be recharged
 - bigger asteroids require more thrust to move them, but they get youmore points
 
@@ -31,7 +33,7 @@ To run / install this game, you'll need:
 - NodeJS with NPM installed.
 - socket.IO.
 - Express.
-- Elm 0.16
+- Elm 0.17
 
 
 #### Downloading the dependencies
