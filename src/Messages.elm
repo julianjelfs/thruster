@@ -39,6 +39,11 @@ type alias Message =
     , payload: Encode.Value
     }
 
+vectorDecoder =
+    Decode.object2
+        Vector
+        ("x" := Decode.float)
+        ("y" := Decode.float)
 
 playerCtr a b c d e f g =
     Player a b c d e f g 0 0 {x=0,y=0} 100
@@ -55,7 +60,7 @@ playerDecoder =
         ("team" := Decode.string)
 
 asteroidDecoder =
-    Decode.object7
+    Decode.object8
         Asteroid
         ("x" := Decode.float)
         ("y" := Decode.float)
@@ -64,6 +69,7 @@ asteroidDecoder =
         ("r" := Decode.float)
         ("aa" := Decode.float)
         ("ra" := Decode.float)
+        (Decode.maybe ("v" := vectorDecoder))
 
 welcomeMessage: Message -> Maybe WelcomeMessage
 welcomeMessage msg =
@@ -104,7 +110,11 @@ deltaMessage msg =
         in
             case result of
                 Ok m -> Just m
-                Err err -> Nothing
+                Err err -> 
+                    let 
+                        e = log "Error: " err
+                    in
+                        Nothing
     else
         Nothing
 

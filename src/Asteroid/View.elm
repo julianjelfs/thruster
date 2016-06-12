@@ -25,17 +25,28 @@ asteroid a =
         (px, py) = (100 * (cos (degrees a.aa)), 100 * (sin (degrees a.aa)))
         l = traced { defaultLine | color = white } (path [(a.x,a.y), (a.x + px, a.y + py)])
 
-        t = fromString ((toString a.aa) ++ "," ++ (toString a.ra))
+        t = fromString (toString a.aa)
             |> centered
             |> toForm
             |> move (a.x, a.y)
+
+        v = 
+            (case a.v of
+                Nothing -> fromString ""
+                Just v ->
+                    fromString ((toString v.x) ++ "," ++ (toString v.y)))
+                        |> centered
+                        |> toForm
+                        |> move (a.x, a.y)
+            
     in
     --group [ l , t,
+    --group [ v , t,
     ngon 6 a.radius
         |> filled (asteroidColour a)
         |> alpha 0.5
         |> move (a.x, a.y)
-     --   ]
+     --]
 
 root asteroids (w, h) =
     asteroids

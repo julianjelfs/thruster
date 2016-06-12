@@ -129,6 +129,19 @@ function mergeVector(v1, v2) {
 function score(goal, asteroid) {
     return distance(goal, asteroid) < config.goalSize - 40
 }
+
+/* maths works like this ...
+ *           90
+ *   180            0
+ *  -------------------
+ *  -180            0
+ *          -90
+ *
+ * but we sometimes want 0 - 360
+ */ 
+function normaliseAngle(a) {
+    return a < 0 ? a + 360 : a
+}
     
 function moveAsteroids(asteroids) {
     
@@ -137,7 +150,7 @@ function moveAsteroids(asteroids) {
             const a = asteroids[k]
             const d = distance(t, a)
             const a1 = angleDegrees(t, a)
-            const a3 = Math.abs(Math.abs(a1) - Math.abs(t.angle))
+            const a3 = Math.abs(normaliseAngle(a1) - normaliseAngle(t.angle))
             
             if(d < config.thrustRange && a3 < config.thrustAngle) {
                 a.v = mergeVector(a.v, newVector(a1))
