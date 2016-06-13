@@ -146,7 +146,7 @@ function normaliseAngle(a) {
 function moveAsteroids(asteroids) {
     
     thrustingPlayers(players).forEach(t => {
-        Object.keys(asteroids).forEach(k =>
+        Object.keys(asteroids).forEach(k => {
             const a = asteroids[k]
             const d = distance(t, a)
             const a1 = angleDegrees(t, a)
