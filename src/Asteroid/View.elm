@@ -22,6 +22,9 @@ asteroidColour a =
 
 asteroid a =
     let
+    {--
+        this is all diagnostic stuff but remember to comment it out because it *really*
+        slows things down!
         (px, py) = (100 * (cos (degrees a.aa)), 100 * (sin (degrees a.aa)))
         l = traced { defaultLine | color = white } (path [(a.x,a.y), (a.x + px, a.y + py)])
 
@@ -38,7 +41,8 @@ asteroid a =
                         |> centered
                         |> toForm
                         |> move (a.x, a.y)
-            
+    --}
+        x = "wtf?"
     in
     --group [ l , t,
     --group [ v , t,

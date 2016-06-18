@@ -6,7 +6,7 @@ import Messages exposing (..)
 import Debug exposing (log)
 
 tolerance = 0.5
-rotationSpeed = 8
+rotationSpeed = 6
 
 newPosition speed angle =
     let
