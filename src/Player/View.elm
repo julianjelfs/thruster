@@ -7,6 +7,7 @@ import List exposing (map)
 import Debug exposing (log)
 import Text exposing (..)
 import String exposing (..)
+import Config exposing (relativePosition)
 
 grad =
     linear (0,0) (100,300) [(1, yellow), (0, yellow)]
@@ -48,7 +49,7 @@ filledCone =
         |> filled yellow
         |> alpha 0.2
 
-player p =
+player dim p =
     let
         name = fromString (p.name |> (String.left 1) |> String.toUpper)
             |> centered
@@ -62,9 +63,10 @@ player p =
                 filledRocket tc
     in
         group [ completeRocket, name ]
-            |> move (p.x, p.y)
+            --|> move (p.x, p.y)
+            |> move (relativePosition dim p)
             |> rotate (degrees p.angle)
 
 root players (w, h) =
     players
-        |> List.map player
+        |> List.map (player (w, h))

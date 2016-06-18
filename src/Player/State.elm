@@ -4,6 +4,7 @@ import Player.Types exposing (..)
 import Agents exposing (Player)
 import Messages exposing (..)
 import Debug exposing (log)
+import Config exposing (dimensions)
 
 tolerance = 0.5
 rotationSpeed = 6
@@ -30,16 +31,20 @@ constrain dim limit =
         else
             dim
 
-currentSpeed {speed} yf =
-    if yf /= 0 then
-        if yf < 0 then
-            -8
+currentSpeed {speed} yf w =
+    let
+        (w, _) = dimensions
+        s = w / (toFloat w) * 8
+    in
+        if yf /= 0 then
+            if yf < 0 then
+                negate s
+            else
+                s
+        else if (abs speed) > tolerance then
+            speed * 0.95
         else
-            8
-    else if (abs speed) > tolerance then
-        speed * 0.95
-    else
-        0
+            0
 
 currentAngle {movingAngle} yf angle =
     if yf /= 0 then
@@ -80,7 +85,6 @@ constrainAngle a =
         else
             a
 
-
 update : Msg -> Player -> (Int, Int) -> ( Player, Cmd Msg )
 update msg player (w, h) =
     case msg of
@@ -98,14 +102,15 @@ update msg player (w, h) =
                 ({player | arrows = arrows, thrusting = thrusting}, Cmd.none)
         Tick t ->
             let
+                (dw, dh) = dimensions
                 wasd = player.arrows
                 (xf, yf) = (toFloat wasd.x, toFloat wasd.y)
-                speed = currentSpeed player yf
+                speed = currentSpeed player yf w
                 angle = player.angle + (xf * rotationSpeed |> negate) |> constrainAngle
                 movingAngle = currentAngle player yf angle
                 (x, y) = (newPosition speed (degrees movingAngle))
-                px = constrain player.x w
-                py = constrain player.y h
+                px = constrain player.x dw
+                py = constrain player.y dh
                 power =
                     clamp 0 100
                         (if player.thrusting then

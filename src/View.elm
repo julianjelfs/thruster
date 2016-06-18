@@ -16,13 +16,14 @@ import Hud.View as Hud
 import Agents exposing (Player, nullPlayer)
 import List
 import Debug.View
+import Config exposing (greenGoal, blueGoal)
 
 canvas {joinedAt, asteroids, players, me, score} dim =
     let
         (w, h) = dim
         goals =
-            [ Goal.root score.blue "BLUE" blue (-400,400)
-            , Goal.root score.green "GREEN" green (400,-400) ]
+            [ Goal.root score.blue "BLUE" blue (blueGoal dim)
+            , Goal.root score.green "GREEN" green (greenGoal dim) ]
         stars = Starfield.root joinedAt dim
         asts = Asteroid.root asteroids dim
         definitelyMe = (Maybe.withDefault nullPlayer me)
