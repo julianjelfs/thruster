@@ -1,4 +1,4 @@
-module Player.Subs exposing(..)
+module Player.Subs exposing (..)
 
 import Keyboard
 import Player.Types
@@ -8,21 +8,25 @@ import Window exposing (resizes)
 import Keyboard exposing (downs, ups)
 import AnimationFrame exposing (diffs)
 
-eventLoop: Sub Msg
+
+eventLoop : Sub Msg
 eventLoop =
     diffs Player.Types.Tick
         |> Sub.map PlayerMsg
 
-windowResize: Sub Msg
-windowResize =
-   resizes (\s -> ScreenSizeChanged (s.width, s.height))
 
-keyDown: Sub Msg
+windowResize : Sub Msg
+windowResize =
+    resizes (\s -> ScreenSizeChanged ( s.width, s.height ))
+
+
+keyDown : Sub Msg
 keyDown =
     downs Player.Types.KeyDown
         |> Sub.map PlayerMsg
 
-keyUp: Sub Msg
+
+keyUp : Sub Msg
 keyUp =
     ups Player.Types.KeyUp
         |> Sub.map PlayerMsg

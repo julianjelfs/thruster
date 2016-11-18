@@ -1,7 +1,8 @@
-module Debug.View exposing(..)
+module Debug.View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+
 
 root player =
     case player of
@@ -17,5 +18,6 @@ root player =
                 , div [] [ text ("thrusting: " ++ (toString p.thrusting)) ]
                 , div [] [ text ("power: " ++ (toString p.power)) ]
                 ]
+
         Nothing ->
             div [] []

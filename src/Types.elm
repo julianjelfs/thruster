@@ -1,4 +1,4 @@
-module Types exposing(..)
+module Types exposing (..)
 
 import Join.Types
 import Player.Types
@@ -6,31 +6,34 @@ import Messages exposing (..)
 import Agents exposing (..)
 import Time
 
-type Msg =
-    JoinMsg Join.Types.Msg
+
+type Msg
+    = JoinMsg Join.Types.Msg
     | PlayerMsg Player.Types.Msg
     | InboundMessage Message
     | NewMessage String
-    | ScreenSizeChanged (Int, Int)
+    | ScreenSizeChanged ( Int, Int )
     | TaskDone ()
 
+
 type alias Model =
-    { join: Join.Types.Model
-    , joined: Bool
-    , joinedAt: Maybe Time.Time
-    , screen: (Int, Int)
-    , me: Maybe Player
-    , players: List Player
-    , asteroids: List Asteroid
-    , score: Score
+    { join : Join.Types.Model
+    , joined : Bool
+    , joinedAt : Maybe Time.Time
+    , screen : ( Int, Int )
+    , me : Maybe Player
+    , players : List Player
+    , asteroids : List Asteroid
+    , score : Score
     }
+
 
 initialModel : Model
 initialModel =
     { join = Join.Types.initialModel
     , joined = False
     , joinedAt = Nothing
-    , screen = (0,0)
+    , screen = ( 0, 0 )
     , me = Nothing
     , players = []
     , asteroids = []

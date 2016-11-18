@@ -1,4 +1,4 @@
-module Asteroid.View exposing(..)
+module Asteroid.View exposing (..)
 
 import Color exposing (..)
 import Color.Convert exposing (hexToColor)
@@ -9,6 +9,7 @@ import List exposing (map)
 import Debug exposing (log)
 import Config exposing (relativePosition)
 
+
 line =
     { color = rgb 255 14 93
     , width = 1
@@ -18,12 +19,14 @@ line =
     , dashOffset = 0
     }
 
+
 asteroidColour a =
     (Maybe.withDefault (rgba 255 14 93 0.5) (hexToColor a.colour))
 
+
 asteroid dim a =
     let
-    {--
+        {--
         this is all diagnostic stuff but remember to comment it out because it *really*
         slows things down!
         (px, py) = (100 * (cos (degrees a.aa)), 100 * (sin (degrees a.aa)))
@@ -34,7 +37,7 @@ asteroid dim a =
             |> toForm
             |> move (a.x, a.y)
 
-        v = 
+        v =
             (case a.v of
                 Nothing -> fromString ""
                 Just v ->
@@ -50,19 +53,23 @@ asteroid dim a =
                 |> toForm
                 |> move (x, y)
     --}
-        (x, y) = relativePosition dim a
+        ( x, y ) =
+            relativePosition dim a
     in
-    --group [ l , t,
-    --group [ pos,
-    ngon 6 a.radius
-        |> filled (asteroidColour a)
-        |> alpha 0.5
-        --|> move (a.x, a.y)
-        |> move (x, y)
-    --]
+        --group [ l , t,
+        --group [ pos,
+        ngon 6 a.radius
+            |> filled (asteroidColour a)
+            |> alpha 0.5
+            --|> move (a.x, a.y)
+            |>
+                move ( x, y )
 
 
-root asteroids (w, h) =
+
+--]
+
+
+root asteroids ( w, h ) =
     asteroids
-        |> List.map (asteroid (w, h))
-
+        |> List.map (asteroid ( w, h ))

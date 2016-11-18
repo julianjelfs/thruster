@@ -1,11 +1,11 @@
-module Player.Types exposing(..)
+module Player.Types exposing (..)
 
 import Messages exposing (..)
 import Time
 import Keyboard exposing (KeyCode)
 
-type Msg =
-    KeyDown KeyCode
+
+type Msg
+    = KeyDown KeyCode
     | KeyUp KeyCode
     | Tick Time.Time
-

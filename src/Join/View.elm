@@ -7,36 +7,42 @@ import Join.Types exposing (..)
 import Json.Decode as Json
 import Debug exposing (log)
 
+
 view : Model -> Html Msg
 view model =
     Html.form
         [ class "join-form"
         , onSubmit (JoinGame (log "name: " model.name) model.team)
         ]
-        [ div 
-            [] 
-            [ label [for "name-field"] [ text "Name" ] 
-            , input 
+        [ div
+            []
+            [ label [ for "name-field" ] [ text "Name" ]
+            , input
                 [ id "name-field"
                 , autofocus True
                 , onInput UpdateName
                 , placeholder "Enter your name"
-                , value model.name ] [] ] 
+                , value model.name
+                ]
+                []
+            ]
         , div
             []
-            [ label [for "team-field"] [ text "Team" ]
+            [ label [ for "team-field" ] [ text "Team" ]
             , select
                 [ class "form-control"
                 , id "team"
-                , on "change" (Json.map UpdateTeam targetValue) ]
+                , on "change" (Json.map UpdateTeam targetValue)
+                ]
                 [ option
-                    [value "Blue"] [ text "Blue" ]
+                    [ value "Blue" ]
+                    [ text "Blue" ]
                 , option
-                    [value "Green"] [ text "Green" ]
+                    [ value "Green" ]
+                    [ text "Green" ]
                 ]
             ]
         , button
-            [ type' "submit" ]
+            [ type_ "submit" ]
             [ text "join the game" ]
         ]
-

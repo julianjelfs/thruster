@@ -1,9 +1,8 @@
-module View exposing(..)
+module View exposing (..)
 
 import Types exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.App exposing (map)
 import Join.View
 import Color exposing (..)
 import Collage exposing (..)
@@ -18,21 +17,38 @@ import List
 import Debug.View
 import Config exposing (greenGoal, blueGoal)
 
-canvas {joinedAt, asteroids, players, me, score} dim =
+
+canvas { joinedAt, asteroids, players, me, score } dim =
     let
-        (w, h) = dim
+        ( w, h ) =
+            dim
+
         goals =
             [ Goal.root score.blue "BLUE" blue (blueGoal dim)
-            , Goal.root score.green "GREEN" green (greenGoal dim) ]
-        stars = Starfield.root joinedAt dim
-        asts = Asteroid.root asteroids dim
-        definitelyMe = (Maybe.withDefault nullPlayer me)
-        plyr = Player.root [definitelyMe] dim
-        notMe = List.filter (\p -> p.id /= definitelyMe.id) players
-        agents = List.concat [stars, asts, plyr, (Player.root notMe dim), [(Hud.root definitelyMe dim)], goals]
+            , Goal.root score.green "GREEN" green (greenGoal dim)
+            ]
+
+        stars =
+            Starfield.root joinedAt dim
+
+        asts =
+            Asteroid.root asteroids dim
+
+        definitelyMe =
+            (Maybe.withDefault nullPlayer me)
+
+        plyr =
+            Player.root [ definitelyMe ] dim
+
+        notMe =
+            List.filter (\p -> p.id /= definitelyMe.id) players
+
+        agents =
+            List.concat [ stars, asts, plyr, (Player.root notMe dim), [ (Hud.root definitelyMe dim) ], goals ]
     in
         collage w h agents
             |> toHtml
+
 
 view : Model -> Html Msg
 view model =
@@ -41,8 +57,9 @@ view model =
             []
             [ h1 [ class "welcome" ] [ Html.text "Woohoo, welcome to the game!" ]
             , canvas model model.screen
-            , Debug.View.root model.me]
+            , Debug.View.root model.me
+            ]
     else
         div
             []
-            [ map JoinMsg (Join.View.view model.join) ]
+            [ Html.map JoinMsg (Join.View.view model.join) ]
